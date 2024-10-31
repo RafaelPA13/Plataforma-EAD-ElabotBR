@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    @keyframes rotate {
+        100% {
+            background-position: 25% 50%;
+        }
+    }
+
+    .bg-auth {
+        height: 100vh;
+        background-image: url(../public/bg.svg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        animation: rotate 10s infinite alternate linear;
+    }
+
+    .form-auth {
+        @apply bg-light w-[80%] rounded-2xl mx-auto p-8 flex flex-col items-center justify-center gap-5 font-poppins md:w-[70%] lg:w-[35%] lg:h-full lg:rounded-none lg:ml-auto lg:mx-0 lg:p-14 lg:gap-10
+    }
+
+    .input {
+        @apply w-full p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4
+    }
+
+    .btn {
+        @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light p-2 rounded-lg md:p-4
+    }
+}

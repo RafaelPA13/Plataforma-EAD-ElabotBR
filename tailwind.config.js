@@ -8,6 +8,8 @@ export default {
         "secondary": "#18763B",
         "tertiary": "#0071C1",
         "alternate": "#208DDA",
+        "light": '#FFFCFF',
+        "light-green": "#DEE9E3"
       },
       fontFamily: {
         "poppins": ["Poppins", "sans-serif"],
