@@ -4,15 +4,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //Pages
 import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 import "./App.css";
-import App from "./App.jsx";
+import Authentication from "./routes/AuthenticationRoutes.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    children: [{ index: true, element: <LoginPage /> }],
+    element: <Authentication />,
+    children: [
+      { index: true, element: <LoginPage /> },
+      { path: "registro", element: <RegisterPage /> }
+    ],
   },
 ]);
 

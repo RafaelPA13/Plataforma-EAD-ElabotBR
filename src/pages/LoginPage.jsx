@@ -4,13 +4,13 @@ export default function LoginPage() {
   return (
     <div className="bg-auth flex items-center">
       <form className="form-auth">
-        <div className="flex gap-1 lg:gap-5">
+        <div className="flex gap-2 lg:gap-5">
           <img
             src="/logo-elaborBr.png"
             alt="ElaborBr"
             className="h-20 w-[124px]"
           />
-          <div className="invisible lg:w-[1px] lg:bg-zinc-500 lg:visible"></div>
+          <div className="w-[1px] bg-zinc-500"></div>
           <img
             src="/logo-trasicao-trabalhista.png"
             alt="Transição Trabalhista"
@@ -34,7 +34,7 @@ export default function LoginPage() {
 
         <span className="w-full flex gap-2 lg:gap-2">
           <p className="text-sm">Não possui conta?</p>
-          <Link to={""} className="font-semibold text-primary text-sm">
+          <Link to={"/registro"} className="font-semibold text-primary text-sm">
             Registre-se
           </Link>
         </span>

@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 
-function App() {
+export default function Authentication() {
   return <Outlet />;
 }
-
-export default App;
