@@ -11,7 +11,7 @@
 
     .bg-auth {
         height: 100vh;
-        background-image: url(../public/bg.svg);
+        background-image: url(/background.svg);
         background-size: cover;
         background-repeat: no-repeat;
         animation: rotate 10s infinite alternate linear;

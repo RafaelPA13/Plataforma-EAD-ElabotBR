@@ -4,11 +4,11 @@ export default function LoginPage() {
   return (
     <div className="bg-auth flex items-center">
       <form className="form-auth">
-        <div className="flex gap-3 lg:gap-5">
+        <div className="flex gap-1 lg:gap-5">
           <img
             src="/logo-elaborBr.png"
             alt="ElaborBr"
-            className="h-20 w-28 lg:w-32"
+            className="h-20 w-[124px]"
           />
           <div className="invisible lg:w-[1px] lg:bg-zinc-500 lg:visible"></div>
           <img
