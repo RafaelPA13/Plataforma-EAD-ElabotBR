@@ -25,12 +25,12 @@ export default function LoginPage() {
         </div>
 
         <div className="w-full flex flex-col items-end gap-5">
-          <input type="text" placeholder="Email:" className="input" />
-          <input type="text" placeholder="Senha:" className="input" />
-          <Link to={""} className="text-zinc-600 text-sm" >Esqueci minha senha</Link>
+          <input type="email" placeholder="Email:" className="input" />
+          <input type="password" placeholder="Senha:" className="input" />
+          <Link to={"/recuperar-senha"} className="text-zinc-600 text-sm" >Esqueci minha senha</Link>
         </div>
 
-        <button className="btn">Entrar</button>
+        <button className="btn-gradient">Entrar</button>
 
         <span className="w-full flex gap-2 lg:gap-2">
           <p className="text-sm">Não possui conta?</p>

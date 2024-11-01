@@ -25,7 +25,7 @@
         @apply w-full p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4
     }
 
-    .btn {
+    .btn-gradient {
         @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light p-2 rounded-lg md:p-4
     }
 }
