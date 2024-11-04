@@ -8,6 +8,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -19,8 +20,12 @@ export default function RegisterPage() {
     setError("");
     try {
       if (password == confirmPassword) {
-        await signUp(name, email, password);
-        navigate("/aluno");
+        await signUp(name, email, password, isAdmin);
+        if (isAdmin) {
+          navigate("/admin");
+        } else {
+          navigate("/aluno");
+        }
       } else {
         setError("As senhas não são idênticas");
         setPassword("");
@@ -91,6 +96,17 @@ export default function RegisterPage() {
               setConfirmPassword(e.target.value);
             }}
           />
+          <span className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="size-6"
+              checked={isAdmin}
+              onChange={() => {
+                setIsAdmin(!isAdmin);
+              }}
+            />
+            <p>Administrador?</p>
+          </span>
         </div>
 
         <button className="btn-gradient">Registrar</button>

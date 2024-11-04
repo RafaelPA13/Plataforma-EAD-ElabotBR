@@ -6,20 +6,24 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth, db } from "../services/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-
-  const signUp = async (name, email, password) => {
+  const signUp = async (name, email, password, isAdmin) => {
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
     await updateProfile(user, { displayName: name });
+    await setDoc(doc(db, "users", user.uid), {
+      name,
+      email,
+      isAdmin,
+    });
     return user;
   };
 
