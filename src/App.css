@@ -11,14 +11,14 @@
 
     .bg-auth {
         height: 100vh;
-        background-image: url(/background.svg);
+        background-image: url(/Hexagon-bg.svg);
         background-size: cover;
         background-repeat: no-repeat;
         animation: rotate 10s infinite alternate linear;
     }
 
     .form-auth {
-        @apply bg-light w-[80%] rounded-2xl mx-auto p-8 flex flex-col items-center justify-center gap-5 font-poppins md:w-[70%] lg:w-[35%] lg:h-full lg:rounded-none lg:ml-auto lg:mx-0 lg:p-14 lg:gap-10
+        @apply bg-light w-[80%] rounded-2xl mx-auto p-8 flex flex-col items-center justify-center gap-5 font-poppins md:w-[70%] lg:w-[50%] lg:h-full lg:rounded-none lg:ml-auto lg:mx-0 lg:p-14 lg:gap-10
     }
 
     .input {
