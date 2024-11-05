@@ -7,23 +7,17 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, db } from "../services/firebase";
-import { doc, setDoc } from "firebase/firestore";
 
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const signUp = async (name, email, password, isAdmin) => {
+  const signUp = async (name, email, password) => {
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
     await updateProfile(user, { displayName: name });
-    await setDoc(doc(db, "users", user.uid), {
-      name,
-      email,
-      isAdmin,
-    });
     return user;
   };
 

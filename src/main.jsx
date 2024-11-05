@@ -3,20 +3,24 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //Authentication Pages
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import RecoverPasswordPage from "./pages/RecoverPasswordPage.jsx";
-import RedefinePasswordPage from "./pages/RedefinePasswordPage.jsx";
+import LoginPage from "./pages/AuthPages/LoginPage.jsx";
+import RegisterPage from "./pages/AuthPages/RegisterPage.jsx";
+import RecoverPasswordPage from "./pages/AuthPages/RecoverPasswordPage.jsx";
+import RedefinePasswordPage from "./pages/AuthPages/RedefinePasswordPage.jsx";
 
-// Student Pages
-import CoursesPage from "./pages/CoursesPage.jsx";
+// Client Pages
+import ClientHomePage from "./pages/ClientPages/Home.jsx";
+
+//ConsultantPages
+import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx"
 
 //Admin Pages
-import DashboardPage from "./pages/DashboardPage.jsx";
+import AdminHomePage from "./pages/AdminPages/Home.jsx";
 
 import "./App.css";
 import Authentication from "./routes/AuthenticationRoutes.jsx";
-import Student from "./routes/StudentRoutes.jsx";
+import Client from "./routes/ClientRoutes.jsx";
+import Consultant from "./routes/ConsultantRoutes.jsx";
 import Admin from "./routes/AdminRoutes.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 
@@ -32,14 +36,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/aluno",
-    element: <Student />,
-    children: [{ index: true, element: <CoursesPage /> }],
+    path: "/cliente",
+    element: <Client />,
+    children: [{ index: true, element: <ClientHomePage /> }],
+  },
+  {
+    path: "/consultor",
+    element: <Consultant />,
+    children: [{ index: true, element: <ConsultantHomePage /> }],
   },
   {
     path: "/admin",
     element: <Admin />,
-    children: [{ index: true, element: <DashboardPage /> }],
+    children: [{ index: true, element: <AdminHomePage /> }],
   },
 ]);
 
