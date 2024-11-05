@@ -1,6 +1,31 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const { signIn } = UserAuth();
+
+  const login = async (e) => {
+    e.preventDefault()
+    setError("")
+    try {
+      await signIn(email, password)
+      navigate("/escolher-rota")
+    } catch (err) {
+      setError("Email ou senha inválidos")
+      // setEmail("")
+      // setPassword("")
+      console.log(err)
+    }
+  }
+
   return (
     <div className="bg-auth flex items-center">
       <div className="w-[50%] hidden lg:block">
@@ -10,7 +35,7 @@ export default function LoginPage() {
           className="w-[75%] mx-auto"
         />
       </div>
-      <form className="form-auth">
+      <form className="form-auth" onSubmit={login}>
         <img
           src="/logo-trasicao-trabalhista.png"
           alt="Transição Trabalhista"
@@ -22,8 +47,20 @@ export default function LoginPage() {
         </div>
 
         <div className="w-full flex flex-col items-end gap-5">
-          <input type="email" placeholder="Email:" className="input" />
-          <input type="password" placeholder="Senha:" className="input" />
+          <input
+            type="email"
+            placeholder="Email:"
+            className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Senha:"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Link to={"/recuperar-senha"} className="text-zinc-600 text-sm">
             Esqueci minha senha
           </Link>

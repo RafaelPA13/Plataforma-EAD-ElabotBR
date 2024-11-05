@@ -20,7 +20,7 @@ export default function RegisterPage() {
     try {
       if (password == confirmPassword) {
         await signUp(name, email, password);
-        navigate('/')
+        navigate("/");
       } else {
         setError("As senhas não são idênticas");
         setPassword("");
@@ -60,36 +60,28 @@ export default function RegisterPage() {
             placeholder="Nome:"
             className="input"
             value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
             type="email"
             placeholder="Email:"
             className="input"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Senha: (mínimo 6 dígitos)"
             className="input"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
             placeholder="Confirmar Senha:"
             className="input"
             value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-            }}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
 

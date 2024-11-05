@@ -26,6 +26,18 @@
     }
 
     .btn-gradient {
-        @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light p-2 rounded-lg md:p-4
+        @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light text-center p-2 rounded-lg md:p-4
+    }
+
+    .btn-red {
+        @apply w-full bg-primary text-light text-center p-2 rounded-lg border-2 border-primary duration-300 hover:bg-transparent hover:text-primary md:p-4
+    }
+
+    .btn-green {
+        @apply w-full bg-secondary text-light text-center p-2 rounded-lg border-2 border-secondary duration-300 hover:bg-transparent hover:text-secondary md:p-4
+    }
+
+    .btn-black {
+        @apply w-full bg-black text-light text-center p-2 rounded-lg border-2 border-black duration-300 hover:bg-transparent hover:text-black md:p-4
     }
 }

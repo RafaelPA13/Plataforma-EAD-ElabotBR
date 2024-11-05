@@ -7,12 +7,13 @@ import LoginPage from "./pages/AuthPages/LoginPage.jsx";
 import RegisterPage from "./pages/AuthPages/RegisterPage.jsx";
 import RecoverPasswordPage from "./pages/AuthPages/RecoverPasswordPage.jsx";
 import RedefinePasswordPage from "./pages/AuthPages/RedefinePasswordPage.jsx";
+import ChooseRoutePage from "./pages/AuthPages/ChooseRoutePage.jsx";
 
 // Client Pages
 import ClientHomePage from "./pages/ClientPages/Home.jsx";
 
 //ConsultantPages
-import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx"
+import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx";
 
 //Admin Pages
 import AdminHomePage from "./pages/AdminPages/Home.jsx";
@@ -23,6 +24,7 @@ import Client from "./routes/ClientRoutes.jsx";
 import Consultant from "./routes/ConsultantRoutes.jsx";
 import Admin from "./routes/AdminRoutes.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
+import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,21 +35,41 @@ const router = createBrowserRouter([
       { path: "registro", element: <RegisterPage /> },
       { path: "recuperar-senha", element: <RecoverPasswordPage /> },
       { path: "redefinir-senha", element: <RedefinePasswordPage /> },
+      {
+        path: "escolher-rota",
+        element: (
+          <ProtectedRoutes>
+            <ChooseRoutePage />
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
     path: "/cliente",
-    element: <Client />,
+    element: (
+      <ProtectedRoutes>
+        <Client />
+      </ProtectedRoutes>
+    ),
     children: [{ index: true, element: <ClientHomePage /> }],
   },
   {
     path: "/consultor",
-    element: <Consultant />,
+    element: (
+      <ProtectedRoutes>
+        <Consultant />
+      </ProtectedRoutes>
+    ),
     children: [{ index: true, element: <ConsultantHomePage /> }],
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: (
+      <ProtectedRoutes>
+        <Admin />
+      </ProtectedRoutes>
+    ),
     children: [{ index: true, element: <AdminHomePage /> }],
   },
 ]);
