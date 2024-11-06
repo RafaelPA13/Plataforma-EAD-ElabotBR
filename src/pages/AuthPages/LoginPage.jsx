@@ -20,9 +20,9 @@ export default function LoginPage() {
       navigate("/escolher-rota")
     } catch (err) {
       setError("Email ou senha inválidos")
-      // setEmail("")
-      // setPassword("")
-      console.log(err)
+      setEmail("")
+      setPassword("")
+      alert(error)
     }
   }
 
