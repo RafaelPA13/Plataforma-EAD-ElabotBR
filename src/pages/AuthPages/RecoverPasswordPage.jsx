@@ -1,6 +1,23 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext";
 
 export default function RecoverPasswordPage() {
+  const [email, setEmail] = useState("");
+
+  const { sendResetEmail } = UserAuth();
+
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    try {
+      await sendResetEmail(email);
+      setEmail("");
+      alert("Email enviado com sucesso");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="bg-auth flex items-center">
       <div className="w-[50%] hidden lg:block">
@@ -10,7 +27,7 @@ export default function RecoverPasswordPage() {
           className="w-[75%] mx-auto"
         />
       </div>
-      <form className="form-auth">
+      <form className="form-auth" onSubmit={sendEmail}>
         <img
           src="/logo-trasicao-trabalhista.png"
           alt="Transição Trabalhista"
@@ -24,12 +41,15 @@ export default function RecoverPasswordPage() {
           </h2>
         </div>
 
-        <input type="email" placeholder="Email:" className="input" />
+        <input
+          type="email"
+          placeholder="Email:"
+          className="input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <button className="btn-gradient">Enviar</button>
-        <Link
-          to={"/"}
-          className="w-full border-2 border-primary font-semibold text-primary text-center p-2 rounded-lg duration-300 md:p-4 hover:bg-primary hover:text-light"
-        >
+        <Link to={"/"} className="btn-red">
           Voltar
         </Link>
       </form>

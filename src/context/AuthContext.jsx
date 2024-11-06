@@ -5,6 +5,8 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  sendPasswordResetEmail,
+  confirmPasswordReset
 } from "firebase/auth";
 import { auth, db } from "../services/firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -48,8 +50,24 @@ export const AuthContextProvider = ({ children }) => {
     };
   });
 
+  const sendResetEmail = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
+  const resetPassword = async (oobCode, newPassword) => {
+    try {
+      await confirmPasswordReset(auth, oobCode, newPassword);
+      alert("Senha redefinida com sucesso.");
+    } catch (error) {
+      console.error("Erro ao redefinir senha: ", error);
+      alert("Não foi possível redefinir a senha.");
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ signUp, signIn, logOut, user }}>
+    <UserContext.Provider
+      value={{ signUp, signIn, logOut, user, sendResetEmail, resetPassword }}
+    >
       {children}
     </UserContext.Provider>
   );

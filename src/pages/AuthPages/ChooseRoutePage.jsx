@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import { db } from "../../services/firebase";
-import { collection, doc, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 export default function ChooseRoutePage() {
   const [userData, setUserData] = useState([]);

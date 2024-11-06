@@ -8,7 +8,6 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -16,20 +15,17 @@ export default function RegisterPage() {
 
   const register = async (e) => {
     e.preventDefault();
-    setError("");
     try {
       if (password == confirmPassword) {
         await signUp(name, email, password);
         navigate("/");
       } else {
-        setError("As senhas não são idênticas");
+        alert("As senhas não são idênticas");
         setPassword("");
         setConfirmPassword("");
-        alert(error);
       }
-    } catch (err) {
-      setError(err.message);
-      alert(err.message);
+    } catch (error) {
+      alert(error.message);
     }
   };
 

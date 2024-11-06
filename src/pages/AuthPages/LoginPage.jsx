@@ -6,25 +6,22 @@ import { UserAuth } from "../../context/AuthContext";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const { signIn } = UserAuth();
 
   const login = async (e) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
     try {
-      await signIn(email, password)
-      navigate("/escolher-rota")
-    } catch (err) {
-      setError("Email ou senha inválidos")
-      setEmail("")
-      setPassword("")
-      alert(error)
+      await signIn(email, password);
+      navigate("/escolher-rota");
+    } catch (error) {
+      alert("Email ou senha inválidos");
+      setEmail("");
+      setPassword("");
     }
-  }
+  };
 
   return (
     <div className="bg-auth flex items-center">
