@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
+import ToastNotifications from "../../components/ToastNotifications";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const navigate = useNavigate();
 
@@ -17,7 +21,8 @@ export default function LoginPage() {
       await signIn(email, password);
       navigate("/escolher-rota");
     } catch (error) {
-      alert("Email ou senha inválidos");
+      setToastMessage("Email ou senha inválidos");
+      setToastType("danger");
       setEmail("");
       setPassword("");
     }
@@ -25,6 +30,15 @@ export default function LoginPage() {
 
   return (
     <div className="bg-auth flex items-center">
+      {toastMessage && (
+        <ToastNotifications
+          message={toastMessage}
+          success={toastType === "success"}
+          warning={toastType === "warning"}
+          danger={toastType === "danger"}
+        />
+      )}
+
       <div className="w-[50%] hidden lg:block">
         <img
           src="/dark-elaborBr-logo.png"

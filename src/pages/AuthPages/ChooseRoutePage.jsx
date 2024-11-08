@@ -4,6 +4,8 @@ import { UserAuth } from "../../context/AuthContext";
 import { db } from "../../services/firebase";
 import { collection, onSnapshot, query } from "firebase/firestore";
 
+import ToastNotifications from "../../components/ToastNotifications";
+
 export default function ChooseRoutePage() {
   const [userData, setUserData] = useState([]);
 
@@ -25,6 +27,8 @@ export default function ChooseRoutePage() {
 
   return (
     <div className="bg-auth flex items-center">
+      <ToastNotifications message={'Login efetuado com sucesso!'} success={true}/>
+
       <div className="w-[50%] hidden lg:block">
         <img
           src="/dark-elaborBr-logo.png"

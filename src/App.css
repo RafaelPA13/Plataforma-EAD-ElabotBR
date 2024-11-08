@@ -9,6 +9,15 @@
         }
     }
 
+    @keyframes shrink {
+        from {
+          width: 100%;
+        }
+        to {
+          width: 0;
+        }
+      }
+
     .bg-auth {
         height: 100vh;
         background-image: url(/Hexagon-bg.svg);

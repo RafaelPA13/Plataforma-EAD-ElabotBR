@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
+import ToastNotifications from "../../components/ToastNotifications";
+
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,17 +24,27 @@ export default function RegisterPage() {
         await signUp(name, email, password);
         navigate("/");
       } else {
-        alert("As senhas não são idênticas");
+        setToastMessage("As senhas não são idênticas");
+        setToastType("warning");
         setPassword("");
         setConfirmPassword("");
       }
     } catch (error) {
-      alert(error.message);
+      setToastMessage(error.message);
+      setToastType("danger");
     }
   };
 
   return (
     <div className="bg-auth flex items-center">
+      {toastMessage && (
+        <ToastNotifications
+          message={toastMessage}
+          success={toastType === "success"}
+          warning={toastType === "warning"}
+          danger={toastType === "danger"}
+        />
+      )}
       <div className="w-[50%] hidden lg:block">
         <img
           src="/dark-elaborBr-logo.png"

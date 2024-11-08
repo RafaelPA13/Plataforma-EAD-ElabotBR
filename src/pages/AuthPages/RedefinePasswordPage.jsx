@@ -2,9 +2,13 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
+import ToastNotifications from "../../components/ToastNotifications";
+
 export default function RedefinePasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const { resetPassword } = UserAuth();
 
@@ -18,14 +22,16 @@ export default function RedefinePasswordPage() {
     e.preventDefault();
 
     if (!oobCode) {
-      alert("Código de redefinição inválido ou expirado.");
+      setToastMessage("Código de redefinição inválido ou expirado.");
+      setToastType("warning");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("As senhas não são idênticas.");
-      setPassword("")
-      setConfirmPassword("")
+      setToastMessage("As senhas não são idênticas.");
+      setToastType("warning");
+      setPassword("");
+      setConfirmPassword("");
       return;
     }
 
@@ -33,12 +39,21 @@ export default function RedefinePasswordPage() {
       await resetPassword(oobCode, password);
       navigate("/");
     } catch (error) {
-      console.error("Erro ao redefinir senha: ", error);
+      setToastMessage(error.message);
+      setToastType("danger");
     }
   };
 
   return (
     <div className="bg-auth flex items-center">
+      {toastMessage && (
+        <ToastNotifications
+          message={toastMessage}
+          success={toastType === "success"}
+          warning={toastType === "warning"}
+          danger={toastType === "danger"}
+        />
+      )}
       <div className="w-[50%] hidden lg:block">
         <img
           src="/dark-elaborBr-logo.png"

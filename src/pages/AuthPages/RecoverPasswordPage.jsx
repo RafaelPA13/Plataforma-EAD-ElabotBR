@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
+import ToastNotifications from "../../components/ToastNotifications";
+
 export default function RecoverPasswordPage() {
   const [email, setEmail] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const { sendResetEmail } = UserAuth();
 
@@ -12,14 +16,25 @@ export default function RecoverPasswordPage() {
     try {
       await sendResetEmail(email);
       setEmail("");
-      alert("Email enviado com sucesso");
+      setToastMessage("Email enviado com sucesso");
+      setToastType("success");
     } catch (error) {
-      alert(error.message);
+      setToastMessage(error.message);
+      setToastType("danger");
     }
   };
 
   return (
     <div className="bg-auth flex items-center">
+      {toastMessage && (
+        <ToastNotifications
+          message={toastMessage}
+          success={toastType === "success"}
+          warning={toastType === "warning"}
+          danger={toastType === "danger"}
+        />
+      )}
+
       <div className="w-[50%] hidden lg:block">
         <img
           src="/dark-elaborBr-logo.png"
