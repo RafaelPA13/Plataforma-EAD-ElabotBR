@@ -41,14 +41,14 @@ export default function LoginPage() {
 
       <div className="w-[50%] hidden lg:block">
         <img
-          src="/dark-elaborBr-logo.png"
+          src="/logo-elaborBR-dark.svg"
           alt="logo elaborBr"
           className="w-[75%] mx-auto"
         />
       </div>
       <form className="form-auth" onSubmit={login}>
         <img
-          src="/logo-trasicao-trabalhista.png"
+          src="/logo-transicao-trabalhista.svg"
           alt="Transição Trabalhista"
           className="w-24 md:w-32 lg:w-48"
         />
