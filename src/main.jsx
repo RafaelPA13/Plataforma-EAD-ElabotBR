@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/cliente",
+    path: "/cliente/",
     element: (
       <ProtectedRoutes>
         <Client />
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
     children: [{ index: true, element: <ClientHomePage /> }],
   },
   {
-    path: "/consultor",
+    path: "/consultor/",
     element: (
       <ProtectedRoutes>
         <Consultant />
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
     children: [{ index: true, element: <ConsultantHomePage /> }],
   },
   {
-    path: "/admin",
+    path: "/admin/",
     element: (
       <ProtectedRoutes>
         <Admin />
