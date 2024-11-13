@@ -28,11 +28,7 @@ export default function AdminSidebar() {
   };
 
   return (
-    <header
-      className={`w-${
-        open ? 72 : 28
-      } h-screen bg-light-green p-5 relative duration-500 font-poppins flex flex-col justify-between`}
-    >
+    <header className={`${open ? "w-72" : "w-28"} h-screen bg-light-green p-5 relative flex flex-col justify-between duration-500`}>
       <button
         className={`absolute rounded-full -right-3 top-9 p-2 border-2 border-primary bg-light text-secondary duration-500 ${
           !open && "rotate-180"
@@ -49,14 +45,14 @@ export default function AdminSidebar() {
           <img
             src={open ? "/logo-elaborBR.svg" : "/logo-elaborBR-menor.svg"}
             alt="logo elaborBR"
-            className="w-[75%]"
+            className={open ? "w-44" : "w-10"}
           />
         </div>
         <ul className="mt-5">
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <MdDashboard />
             <span className={open ? "block" : "hidden"}>Dashboard</span>
@@ -64,7 +60,7 @@ export default function AdminSidebar() {
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-300 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <FaBuilding />
             <span className={open ? "block" : "hidden"}>Empresas</span>
@@ -72,7 +68,7 @@ export default function AdminSidebar() {
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-300 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <MdClass />
             <span className={open ? "block" : "hidden"}>Aulas</span>
@@ -80,7 +76,7 @@ export default function AdminSidebar() {
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-300 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <FaUsers />
             <span className={open ? "block" : "hidden"}>Usuários</span>
@@ -88,7 +84,7 @@ export default function AdminSidebar() {
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-300 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <MdSell />
             <span className={open ? "block" : "hidden"}>Vendas</span>
@@ -96,7 +92,7 @@ export default function AdminSidebar() {
           <Link
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } font-semibold text-2xl text-zinc-500 duration-300 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
+            } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
           >
             <TfiStatsUp />
             <span className={open ? "block" : "hidden"}>Métricas</span>
