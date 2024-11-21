@@ -6,10 +6,10 @@ import {
   onAuthStateChanged,
   updateProfile,
   sendPasswordResetEmail,
-  confirmPasswordReset
+  confirmPasswordReset,
 } from "firebase/auth";
 import { auth, db } from "../services/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 const UserContext = createContext();
 
@@ -26,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
     await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: email,
+      bio: "",
       isAdmin: false,
       isConsultant: false,
       isClient: false,
@@ -64,9 +65,25 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const editProfile = async (user, name, bio) => {
+    await updateProfile(user, { displayName: name });
+    await updateDoc(doc(db, "users", user.uid), {
+      name: name,
+      bio: bio,
+    });
+  };
+
   return (
     <UserContext.Provider
-      value={{ signUp, signIn, logOut, user, sendResetEmail, resetPassword }}
+      value={{
+        signUp,
+        signIn,
+        logOut,
+        user,
+        sendResetEmail,
+        resetPassword,
+        editProfile,
+      }}
     >
       {children}
     </UserContext.Provider>

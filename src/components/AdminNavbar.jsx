@@ -113,7 +113,7 @@ export default function AdminSidebar({ open, toggleSideBar }) {
           <span
             className={`flex items-center ${
               open ? "gap-3" : "justify-center"
-            } p-2 duration-300 hover:bg-zinc-300 rounded-lg`}
+            } p-2 duration-300 hover:bg-zinc-300 cursor-pointer rounded-lg`}
             onClick={() => setOpenModal(true)}
           >
             <img
@@ -126,7 +126,7 @@ export default function AdminSidebar({ open, toggleSideBar }) {
               className="size-12"
             />
             <div className={open ? "block" : "hidden"}>
-              <h1 className="font-semibold text-xl">{user.displayName}</h1>
+              <h1 className="font-semibold text-lg">{user.displayName}</h1>
               <h2 className="font-light text-zinc-500 text-sm">{user.email}</h2>
             </div>
           </span>
