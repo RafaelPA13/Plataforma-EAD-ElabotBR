@@ -74,7 +74,7 @@ export default function EditProfileModal({ openModal, closeModal }) {
           />
         )}
         <form
-          className="w-[75%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative lg:w-[25%] shadow-lg"
+          className="w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative md:w-[25%] shadow-lg"
           onSubmit={profileEdit}
         >
           <button
@@ -103,7 +103,7 @@ export default function EditProfileModal({ openModal, closeModal }) {
           />
           <label className="self-start font-semibold">Biografia:</label>
           <textarea
-            className="w-full h-[150px] p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4 lg:h-[150px]"
+            className="w-full h-[150px] p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4 md:h-[150px]"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           ></textarea>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
@@ -11,10 +10,21 @@ import { FaUsers } from "react-icons/fa";
 import { MdSell } from "react-icons/md";
 import { TfiStatsUp } from "react-icons/tfi";
 
+import AdminNavbarLinks from "./AdminNavbarLinks";
 import EditProfileModal from "./EditProfileModal";
 
-export default function AdminSidebar({ open, toggleSideBar }) {
+export default function AdminSidebar() {
+  const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+
+  const navLinks = [
+    { icon: <MdDashboard />, text: "Dashboard", route: "/admin" },
+    { icon: <FaBuilding />, text: "Empresas", route: "" },
+    { icon: <MdClass />, text: "Aulas", route: "" },
+    { icon: <FaUsers />, text: "Usuários", route: "" },
+    { icon: <MdSell />, text: "Vendas", route: "" },
+    { icon: <TfiStatsUp />, text: "Métricas", route: "" },
+  ];
 
   const { user, logOut } = UserAuth();
 
@@ -33,85 +43,44 @@ export default function AdminSidebar({ open, toggleSideBar }) {
     <>
       <header
         className={`${
-          open ? "w-full lg md:w-72" : "w-10 lg md:w-28"
-        } h-screen bg-light-green p-5 relative flex flex-col justify-between duration-500`}
+          open ? "w-full md:w-72" : "w-28"
+        } h-20 p-0 flex flex-row relative duration-500 z-10 md:h-screen flex-col justify-between md:bg-light-green md:p-5`}
       >
         <button
-          className={`w-9 p-2 border-2 border-primary bg-light text-secondary duration-500 ${
+          className={`hidden md:block w-9 p-2 border-2 border-primary bg-light text-secondary duration-500 ${
             !open && "rotate-180"
-          } lg md:absolute rounded-full -right-3 top-9`}
-          onClick={toggleSideBar}
+          } absolute rounded-full -right-4 top-9`}
+          onClick={() => setOpen(!open)}
         >
           <IoIosArrowBack />
         </button>
 
-        <nav className={`${open ? "block" : "hidden"} lg md:block`}>
-          <div className="flex justify-center ">
+        <nav
+          className={`${
+            open ? "block" : "hidden"
+          } md:block fixed bottom-0 left-0 w-full p-2 bg-light-green md:relative md:bottom-auto md:left-auto`}
+        >
+          <div className="hidden md:flex justify-center ">
             <img
               src={open ? "/logo-elaborBR.svg" : "/logo-elaborBR-menor.svg"}
               alt="logo elaborBR"
               className={open ? "w-44" : "w-10"}
             />
           </div>
-          <ul className="mt-5">
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-              to={"/admin"}
-            >
-              <MdDashboard />
-              <span className={open ? "block" : "hidden"}>Dashboard</span>
-            </Link>
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-            >
-              <FaBuilding />
-              <span className={open ? "block" : "hidden"}>Empresas</span>
-            </Link>
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-            >
-              <MdClass />
-              <span className={open ? "block" : "hidden"}>Aulas</span>
-            </Link>
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-            >
-              <FaUsers />
-              <span className={open ? "block" : "hidden"}>Usuários</span>
-            </Link>
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-            >
-              <MdSell />
-              <span className={open ? "block" : "hidden"}>Vendas</span>
-            </Link>
-            <Link
-              className={`flex items-center ${
-                open ? "gap-3" : "justify-center"
-              } font-semibold text-2xl text-zinc-500 p-3 rounded-md hover:bg-green-100 hover:text-primary`}
-            >
-              <TfiStatsUp />
-              <span className={open ? "block" : "hidden"}>Métricas</span>
-            </Link>
+          <ul className="flex flex-row md:flex-col justify-between md:mt-5">
+            {navLinks.map((link) => (
+              <AdminNavbarLinks
+                open={open}
+                icon={link.icon}
+                text={link.text}
+                route={link.route}
+              />
+            ))}
           </ul>
         </nav>
-        <div
-          className={`${
-            open ? "pt-5 border-t-2 border-secondary" : "hidden"
-          } lg md:block pt-5 border-t-2 border-secondary`}
-        >
+        <div className="bg-light-green w-full p-2 flex flex-row items-center border-t-0 border-b-2 border-secondary md:flex-col gap-2 md:p-0 md:border-t-2 md:border-b-0 fixed top-0 left-0 z-10 md:relative">
           <span
-            className={`flex items-center ${
+            className={`w-full flex items-center ${
               open ? "gap-3" : "justify-center"
             } p-2 duration-300 hover:bg-zinc-300 cursor-pointer rounded-lg`}
             onClick={() => setOpenModal(true)}
@@ -125,12 +94,12 @@ export default function AdminSidebar({ open, toggleSideBar }) {
               alt="perfil"
               className="size-12"
             />
-            <div className={open ? "block" : "hidden"}>
+            <div className={`hidden md:${open ? "block" : "hidden"}`}>
               <h1 className="font-semibold text-lg">{user.displayName}</h1>
-              <h2 className="font-light text-zinc-500 text-sm">{user.email}</h2>
+              <h2 className="font-light text-zinc-500 text-xs">{user.email}</h2>
             </div>
           </span>
-          <button className="btn-red mt-5" onClick={exit}>
+          <button className="btn-red" onClick={exit}>
             Sair
           </button>
         </div>
