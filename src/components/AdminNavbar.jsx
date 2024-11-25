@@ -19,11 +19,11 @@ export default function AdminSidebar() {
 
   const navLinks = [
     { icon: <MdDashboard />, text: "Dashboard", route: "/admin" },
-    { icon: <FaBuilding />, text: "Empresas", route: "" },
-    { icon: <MdClass />, text: "Aulas", route: "" },
-    { icon: <FaUsers />, text: "Usuários", route: "" },
-    { icon: <MdSell />, text: "Vendas", route: "" },
-    { icon: <TfiStatsUp />, text: "Métricas", route: "" },
+    { icon: <FaBuilding />, text: "Empresas", route: "/admin/empresas" },
+    { icon: <MdClass />, text: "Aulas", route: "/admin/aulas" },
+    { icon: <FaUsers />, text: "Usuários", route: "/admin/usuarios" },
+    { icon: <MdSell />, text: "Vendas", route: "/admin/vendas" },
+    { icon: <TfiStatsUp />, text: "Métricas", route: "/admin/metricas" },
   ];
 
   const { user, logOut } = UserAuth();

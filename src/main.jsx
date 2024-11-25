@@ -16,7 +16,12 @@ import ClientHomePage from "./pages/ClientPages/Home.jsx";
 import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx";
 
 //Admin Pages
-import AdminHomePage from "./pages/AdminPages/Home.jsx";
+import DashboardPage from "./pages/AdminPages/DashboardPage.jsx";
+import CompanyPage from "./pages/AdminPages/CompanyPage.jsx";
+import ClassPage from "./pages/AdminPages/ClassesPage.jsx";
+import UsersPage from "./pages/AdminPages/UsersPage.jsx";
+import SellPage from "./pages/AdminPages/SellPage.jsx";
+import MetricPage from "./pages/AdminPages/MetricPage.jsx";
 
 import "./App.css";
 import Authentication from "./routes/AuthenticationRoutes.jsx";
@@ -70,7 +75,14 @@ const router = createBrowserRouter([
         <Admin />
       </ProtectedRoutes>
     ),
-    children: [{ index: true, element: <AdminHomePage /> }],
+    children: [
+      { index: true, element: <DashboardPage /> },
+      { path: "empresas", element: <CompanyPage /> },
+      { path: "aulas", element: <ClassPage /> },
+      { path: "usuarios", element: <UsersPage /> },
+      { path: "vendas", element: <SellPage /> },
+      { path: "metricas", element: <MetricPage /> },
+    ],
   },
 ]);
 
