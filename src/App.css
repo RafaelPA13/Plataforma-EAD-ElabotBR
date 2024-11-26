@@ -51,6 +51,6 @@
     }
 
     .page {
-        @apply w-full h-screen p-7 font-poppins flex flex-col gap-5 overflow-auto
+        @apply w-full h-screen p-7 font-poppins flex flex-col gap-5 overflow-y-scroll
     }
 }
