@@ -18,12 +18,12 @@ export default function AdminSidebar() {
   const [openModal, setOpenModal] = useState(false);
 
   const navLinks = [
-    { icon: <MdDashboard />, text: "Dashboard", route: "/admin" },
-    { icon: <FaBuilding />, text: "Empresas", route: "/admin/empresas" },
-    { icon: <MdClass />, text: "Aulas", route: "/admin/aulas" },
-    { icon: <FaUsers />, text: "Usuários", route: "/admin/usuarios" },
-    { icon: <MdSell />, text: "Vendas", route: "/admin/vendas" },
-    { icon: <TfiStatsUp />, text: "Métricas", route: "/admin/metricas" },
+    { id: 1, icon: <MdDashboard />, text: "Dashboard", route: "/admin" },
+    { id: 2, icon: <FaBuilding />, text: "Empresas", route: "/admin/empresas" },
+    { id: 3, icon: <MdClass />, text: "Aulas", route: "/admin/aulas" },
+    { id: 4, icon: <FaUsers />, text: "Usuários", route: "/admin/usuarios" },
+    { id: 5, icon: <MdSell />, text: "Vendas", route: "/admin/vendas" },
+    { id: 6, icon: <TfiStatsUp />, text: "Métricas", route: "/admin/metricas" },
   ];
 
   const { user, logOut } = UserAuth();
@@ -70,6 +70,7 @@ export default function AdminSidebar() {
           <ul className="flex flex-row md:flex-col justify-between md:mt-5">
             {navLinks.map((link) => (
               <AdminNavbarLinks
+                key={link.id}
                 open={open}
                 icon={link.icon}
                 text={link.text}

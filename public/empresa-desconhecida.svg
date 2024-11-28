@@ -1,0 +1,19 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="256" height="256" rx="15" fill="#D9D9D9"/>
+<path d="M31 226H203.42H225" stroke="#A1A1A1" stroke-width="7" stroke-linecap="round"/>
+<path d="M115 113C115 111.895 115.895 111 117 111H201C202.105 111 203 111.895 203 113V226H115V113Z" stroke="#A1A1A1" stroke-width="7"/>
+<path d="M64 226H60.5V229.5H64V226ZM203 226V229.5H206.5V226H203ZM152 111H148.5V114.5H152V111ZM67.5 33C67.5 33.8284 66.8284 34.5 66 34.5V27.5C62.9624 27.5 60.5 29.9624 60.5 33H67.5ZM67.5 226V33H60.5V226H67.5ZM115 222.5H64V229.5H115V222.5ZM152 222.5H115V229.5H152V222.5ZM203 222.5H152V229.5H203V222.5ZM199.5 113V226H206.5V113H199.5ZM201 114.5C200.172 114.5 199.5 113.828 199.5 113H206.5C206.5 109.962 204.038 107.5 201 107.5V114.5ZM152 114.5H201V107.5H152V114.5ZM148.5 33V111H155.5V33H148.5ZM150 34.5C149.172 34.5 148.5 33.8284 148.5 33H155.5C155.5 29.9624 153.038 27.5 150 27.5V34.5ZM66 34.5H150V27.5H66V34.5Z" fill="#A1A1A1"/>
+<rect x="132" y="124" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="132" y="157" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="132" y="191" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="166" y="124" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="166" y="157" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="166" y="191" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="80" y="44" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="80" y="77" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="80" y="111" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="114" y="44" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="114" y="77" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<rect x="80" y="145" width="21" height="21" rx="2" stroke="#A1A1A1" stroke-width="5"/>
+<path d="M81 188C81 186.895 81.8954 186 83 186H100C101.105 186 102 186.895 102 188V223H81V188Z" stroke="#A1A1A1" stroke-width="5"/>
+</svg>
