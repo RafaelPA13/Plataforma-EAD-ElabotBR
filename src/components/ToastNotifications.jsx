@@ -1,6 +1,7 @@
 import { FaRegCheckCircle } from "react-icons/fa";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { VscError } from "react-icons/vsc";
+
 import { useEffect, useState } from "react";
 
 export default function ToastNotifications({
@@ -9,7 +10,7 @@ export default function ToastNotifications({
   warning,
   danger,
 }) {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const backgroundColor = success
     ? "bg-secondary"
@@ -38,9 +39,12 @@ export default function ToastNotifications({
     : VscError;
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (message) {
+      setIsVisible(true)
+      const timer = setTimeout(() => setIsVisible(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, success, warning, danger]);
 
   if (!isVisible) return null;
 

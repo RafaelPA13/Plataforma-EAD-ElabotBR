@@ -52,6 +52,7 @@ export default function EditProfileModal({ openModal, closeModal }) {
       setToastMessage(error.message);
       setToastType("danger");
     }
+    
   };
 
   const handleCloseModal = () => {
@@ -63,8 +64,8 @@ export default function EditProfileModal({ openModal, closeModal }) {
   if (!openModal) return null;
 
   return (
-    <div className="fixed inset-0 z-40">
-      <div className="h-screen bg-black bg-opacity-50 flex items-center justify-center font-poppins">
+    <div className="modal-index">
+      <div className="modal-bg">
         {toastMessage && (
           <ToastNotifications
             message={toastMessage}
@@ -73,14 +74,8 @@ export default function EditProfileModal({ openModal, closeModal }) {
             danger={toastType === "danger"}
           />
         )}
-        <form
-          className="w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative md:w-[25%] shadow-lg"
-          onSubmit={profileEdit}
-        >
-          <button
-            className="absolute left-6 text-2xl p-2 border-2 border-secondary rounded-full duration-300 hover:bg-secondary hover:text-light"
-            onClick={handleCloseModal}
-          >
+        <form className="modal-form" onSubmit={profileEdit}>
+          <button className="modal-btn" onClick={handleCloseModal}>
             <IoMdClose />
           </button>
           <img
@@ -90,20 +85,17 @@ export default function EditProfileModal({ openModal, closeModal }) {
             alt="perfil"
             className="size-32"
           />
-          <input
-            type="file"
-            className="input"
-          />
-          <label className="self-start font-semibold">Nome:</label>
+          <input type="file" className="input" />
+          <label className="modal-label">Nome:</label>
           <input
             type="text"
             className="input"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <label className="self-start font-semibold">Biografia:</label>
+          <label className="modal-label">Biografia:</label>
           <textarea
-            className="w-full h-[150px] p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4 md:h-[150px]"
+            className="textarea"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           ></textarea>

@@ -22,6 +22,8 @@ import ClassPage from "./pages/AdminPages/ClassesPage.jsx";
 import UsersPage from "./pages/AdminPages/UsersPage.jsx";
 import SellPage from "./pages/AdminPages/SellPage.jsx";
 import MetricPage from "./pages/AdminPages/MetricPage.jsx";
+import CompanyDetailPage from "./pages/AdminPages/CompanyDetail.jsx";
+import CourseDetailPage from "./pages/AdminPages/CourseDetail.jsx";
 
 import "./App.css";
 import Authentication from "./routes/AuthenticationRoutes.jsx";
@@ -79,6 +81,8 @@ const router = createBrowserRouter([
       { index: true, element: <DashboardPage /> },
       { path: "empresas", element: <CompanyPage /> },
       { path: "aulas", element: <ClassPage /> },
+      { path: "aulas/:companyId", element: <CompanyDetailPage /> },
+      { path: "aulas/:companyId/cursos/:courseId", element: <CourseDetailPage/> },
       { path: "usuarios", element: <UsersPage /> },
       { path: "vendas", element: <SellPage /> },
       { path: "metricas", element: <MetricPage /> },

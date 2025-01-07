@@ -18,6 +18,7 @@ export default function CompanyPage() {
       await addDoc(collection(db, "companies"), {
         company: company,
         code: code,
+        coursesId: []
       });
       setCompany("");
       setCode("");
@@ -55,7 +56,7 @@ export default function CompanyPage() {
         />
       )}
       <form
-        className="w-[75%] bg-light-green mx-auto p-5 rounded-xl flex flex-col items-center gap-5"
+        className="w-full bg-light-green mx-auto p-5 rounded-xl flex flex-col items-center gap-5"
         onSubmit={registerCompany}
       >
         <h1 className="text-2xl font-semibold">Cadastro de Empresas</h1>
@@ -83,7 +84,13 @@ export default function CompanyPage() {
       </form>
       <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-5">
         {companies.map((comp) => (
-          <CompanyCard key={comp.id} logo={""} company={comp.company} code={comp.code} />
+          <CompanyCard
+            key={comp.id}
+            id={comp.id}
+            logo={""}
+            company={comp.company}
+            code={comp.code}
+          />
         ))}
       </ul>
     </div>

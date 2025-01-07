@@ -1,6 +1,8 @@
-export default function CompanyCard({ logo, company, code }) {
+import { Link } from "react-router-dom";
+
+export default function CompanyCard({ id, logo, company, code }) {
   return (
-    <li className="bg-light-green p-5 rounded-lg flex flex-col justify-center gap-3 duration-300 hover:scale-95">
+    <Link to={`/admin/aulas/${id}`} className="bg-light-green p-5 rounded-lg flex flex-col justify-center gap-3 duration-300 hover:scale-95">
       <img
         src={logo === "" ? "/empresa-desconhecida.svg" : logo}
         alt={`logo da empresa ${company}`}
@@ -9,6 +11,6 @@ export default function CompanyCard({ logo, company, code }) {
         <h1 className="text-xl">{company}</h1>
         <p className="text-zinc-500 text-sm font-light">{code}</p>
       </div>
-    </li>
+    </Link>
   );
 }
