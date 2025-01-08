@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { db } from "../services/firebase";
-import { addDoc, collection, updateDoc, doc, arrayUnion } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  updateDoc,
+  doc,
+  arrayUnion,
+} from "firebase/firestore";
 
 import { IoMdClose } from "react-icons/io";
 import ToastNotifications from "./ToastNotifications";
@@ -28,6 +34,7 @@ export default function CreateCourseModal({
           name: course,
           mentor: mentor,
           description: description,
+          active: true,
         });
 
         const companyRef = doc(db, "companies", companyId);
@@ -46,9 +53,8 @@ export default function CreateCourseModal({
           setToastMessage("");
           setToastType("");
         }, 5000);
-
       } catch (error) {
-        console.error(error)
+        console.error(error);
         setToastMessage(error.message);
         setToastType("danger");
       }
