@@ -50,7 +50,7 @@ export default function CompanyDetailPage() {
           <IoIosArrowBack />
           Voltar
         </Link>
-        <div className="w-full bg-light-green p-7 rounded-2xl flex flex-col justify-between lg:flex-row">
+        <div className="w-full bg-light-green p-7 rounded-2xl flex flex-wrap justify-center lg:justify-between">
           {/* Quando o storage estiver em uso colocar foto da empresa */}
           <img src="/empresa-desconhecida.svg" alt={company.company} />
           <div className="w-full p-5 flex flex-col gap-3 uppercase lg:w-[50%]">
@@ -65,7 +65,7 @@ export default function CompanyDetailPage() {
           </div>
         </div>
         <div className="flex flex-col gap-3 items-center justify-between lg md:flex-row">
-          <h1 className="w-full text-3xl font-bold">Treinamentos</h1>
+          <h1 className="w-full text-2xl font-bold">Treinamentos</h1>
           <button className="btn-green" onClick={() => setOpenModal(true)}>
             Adicionar Treinamento
           </button>
