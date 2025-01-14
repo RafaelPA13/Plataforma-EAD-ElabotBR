@@ -14,20 +14,25 @@ export default function CompanyPage() {
 
   const registerCompany = async (e) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, "companies"), {
-        company: company,
-        code: code,
-        coursesId: []
-      });
-      setCompany("");
-      setCode("");
-      setToastMessage("Empresa registrada!");
-      setToastType("success");
-    } catch (error) {
-      setToastMessage(error.message);
-      setToastType("danger");
-      console.log(error.message);
+    if (company === "" || code === "") {
+      setToastMessage("Preencha todos os campos do formulário");
+      setToastType("warning");
+    } else {
+      try {
+        await addDoc(collection(db, "companies"), {
+          company: company,
+          code: code,
+          coursesId: [],
+        });
+        setCompany("");
+        setCode("");
+        setToastMessage("Empresa registrada!");
+        setToastType("success");
+      } catch (error) {
+        setToastMessage(error.message);
+        setToastType("danger");
+        console.log(error.message);
+      }
     }
   };
 

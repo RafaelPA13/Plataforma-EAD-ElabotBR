@@ -3,78 +3,82 @@
 @tailwind utilities;
 
 @layer utilities {
-    @keyframes rotate {
-        100% {
-            background-position: 25% 50%;
-        }
+  @keyframes rotate {
+    100% {
+      background-position: 25% 50%;
     }
+  }
 
-    @keyframes shrink {
-        from {
-          width: 100%;
-        }
-        to {
-          width: 0;
-        }
-      }
-
-    .bg-auth {
-        height: 100vh;
-        background-image: url(/Hexagon-bg.svg);
-        background-size: cover;
-        background-repeat: no-repeat;
-        animation: rotate 10s infinite alternate linear;
+  @keyframes shrink {
+    from {
+      width: 100%;
     }
-
-    .form-auth {
-        @apply bg-light w-[80%] rounded-2xl mx-auto p-8 flex flex-col items-center justify-center gap-5 font-poppins md:w-[70%] lg:w-[50%] lg:h-full lg:rounded-none lg:ml-auto lg:mx-0 lg:p-14 lg:gap-10
+    to {
+      width: 0;
     }
+  }
 
-    .input {
-        @apply w-full p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4
-    }
+  .bg-auth {
+    height: 100vh;
+    background-image: url(/Hexagon-bg.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: rotate 10s infinite alternate linear;
+  }
 
-    .btn-gradient {
-        @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light text-center p-2 rounded-lg md:p-4
-    }
+  .form-auth {
+    @apply bg-light w-[80%] rounded-2xl mx-auto p-8 flex flex-col items-center justify-center gap-5 font-poppins md:w-[70%] lg:w-[50%] lg:h-full lg:rounded-none lg:ml-auto lg:mx-0 lg:p-14 lg:gap-10;
+  }
 
-    .btn-red {
-        @apply w-full bg-primary text-light text-center p-2 rounded-lg border-2 border-primary duration-300 hover:bg-transparent hover:text-primary md:p-4
-    }
+  .input {
+    @apply w-full p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4;
+  }
 
-    .btn-green {
-        @apply w-full bg-secondary text-light text-center p-2 rounded-lg border-2 border-secondary duration-300 hover:bg-transparent hover:text-secondary md:p-4
-    }
+  .btn-gradient {
+    @apply w-full bg-gradient-to-r from-tertiary to-alternate font-semibold text-light text-center p-2 rounded-lg md:p-4;
+  }
 
-    .btn-black {
-        @apply w-full bg-black text-light text-center p-2 rounded-lg border-2 border-black duration-300 hover:bg-transparent hover:text-black md:p-4
-    }
+  .btn-red {
+    @apply w-full bg-primary text-light text-center p-2 rounded-lg border-2 border-primary duration-300 hover:bg-transparent hover:text-primary md:p-4;
+  }
 
-    .page {
-        @apply w-full h-screen p-7 font-poppins flex flex-col gap-7 overflow-y-auto
-    }
+  .btn-green {
+    @apply w-full bg-secondary text-light text-center p-2 rounded-lg border-2 border-secondary duration-300 hover:bg-transparent hover:text-secondary md:p-4;
+  }
 
-    .modal-form {
-        @apply w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative md:w-[75%] lg:w-[25%] shadow-lg
-    }
+  .btn-black {
+    @apply w-full bg-black text-light text-center p-2 rounded-lg border-2 border-black duration-300 hover:bg-transparent hover:text-black md:p-4;
+  }
 
-    .modal-bg {
-        @apply h-screen bg-black bg-opacity-50 flex items-center justify-center font-poppins
-    }
+  .page {
+    @apply w-full h-screen p-7 font-poppins flex flex-col gap-7 overflow-y-auto;
+  }
 
-    .modal-index {
-        @apply fixed inset-0 z-40
-    }
+  .modal-form {
+    @apply w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative md:w-[75%] lg:w-[25%] shadow-lg;
+  }
 
-    .modal-label {
-        @apply self-start font-semibold
-    }
+  .modal-bg {
+    @apply h-screen bg-black bg-opacity-50 flex items-center justify-center font-poppins;
+  }
 
-    .textarea {
-        @apply w-full h-[150px] resize-none p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4 md:h-[150px]
-    }
+  .modal-index {
+    @apply fixed inset-0 z-40;
+  }
 
-    .modal-btn {
-        @apply absolute left-6 text-2xl p-2 border-2 border-secondary rounded-full duration-300 hover:bg-secondary hover:text-light
-    }
+  .modal-label {
+    @apply self-start font-semibold;
+  }
+
+  .textarea {
+    @apply w-full h-[150px] resize-none p-2 border-2 border-zinc-500 rounded-lg placeholder:text-zinc-500 focus:outline outline-secondary md:p-4 md:h-[150px];
+  }
+
+  .modal-btn {
+    @apply absolute left-6 text-2xl p-2 border-2 border-secondary rounded-full duration-300 hover:bg-secondary hover:text-light;
+  }
+
+  .modal-checkbox {
+    @apply w-5 h-5 rounded-md border-2 border-gray-300 focus:ring-2 focus:ring-secondary focus:outline-none cursor-pointer transition duration-200 checked:bg-secondary checked:border-secondary;
+  }
 }

@@ -41,7 +41,7 @@ export default function CompanyDetailPage() {
   }, [companyId, openModal, openModalCompany]);
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full">
       <div className="page">
         <Link
           to={"/admin/aulas"}

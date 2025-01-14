@@ -57,6 +57,8 @@ export default function EditComapnyModal({
   useEffect(() => {
     if (openModalCompany) {
       fetchCompanyData();
+      setToastMessage("");
+      setToastType("");
     }
   }, [openModalCompany, companyId]);
 

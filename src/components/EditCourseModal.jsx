@@ -1,35 +1,42 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../services/firebase";
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  doc,
-  arrayUnion,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 import { IoMdClose } from "react-icons/io";
 import ToastNotifications from "./ToastNotifications";
 
-export default function CreateCourseModal({
-  openModal,
-  closeModal,
-  companyId,
-}) {
+export default function EditCourseModal({ openModal, closeModal, courseId }) {
   const [course, setCourse] = useState("");
   const [mentor, setMentor] = useState("");
   const [description, setDescription] = useState("");
+  const [active, setActive] = useState(true);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
 
-    useEffect(() => {
-      if (openModal) {
-        setToastMessage("");
-        setToastType("");
-      }
-    }, [openModal]);
+  const fetchCourseData = async () => {
+    if (courseId) {
+      const docRef = doc(db, "courses", courseId);
+      const docSnap = await getDoc(docRef);
 
-  const createCourse = async (e) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setCourse(data.name || "");
+        setMentor(data.mentor || "");
+        setDescription(data.description || "");
+        setActive(data.active !== undefined ? data.active : true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (openModal) {
+      fetchCourseData();
+      setToastMessage("");
+      setToastType("");
+    }
+  }, [openModal, courseId]);
+
+  const updateCourse = async (e) => {
     e.preventDefault();
 
     if (course === "" || mentor === "" || description === "") {
@@ -37,20 +44,14 @@ export default function CreateCourseModal({
       setToastType("warning");
     } else {
       try {
-        const courseRef = await addDoc(collection(db, "courses"), {
+        await updateDoc(doc(db, "courses", courseId), {
           name: course,
           mentor: mentor,
+          active: active,
           description: description,
-          active: true,
-          modulesId: []
         });
 
-        const companyRef = doc(db, "companies", companyId);
-        await updateDoc(companyRef, {
-          coursesId: arrayUnion(courseRef.id),
-        });
-
-        setToastMessage("Treinamento adicionado com sucesso!");
+        setToastMessage("Treinamento editado com sucesso!");
         setToastType("success");
 
         setCourse("");
@@ -82,11 +83,11 @@ export default function CreateCourseModal({
             danger={toastType === "danger"}
           />
         )}
-        <form className="modal-form" onSubmit={createCourse}>
+        <form className="modal-form" onSubmit={updateCourse}>
           <button className="modal-btn" onClick={closeModal}>
             <IoMdClose />
           </button>
-          <h1 className="mt-10 text-xl font-bold">Adicionar um Treinamento</h1>
+          <h1 className="mt-10 text-xl font-bold">Editar um Treinamento</h1>
           <label className="modal-label">Nome:</label>
           <input
             type="text"
@@ -101,6 +102,15 @@ export default function CreateCourseModal({
             value={mentor}
             onChange={(e) => setMentor(e.target.value)}
           />
+          <span className="w-full flex gap-3 items-center">
+            <label className="modal-label">Ativo:</label>
+            <input
+              type="checkbox"
+              className="modal-checkbox"
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
+            />
+          </span>
           <label className="modal-label">Descrição:</label>
           <textarea
             className="textarea"

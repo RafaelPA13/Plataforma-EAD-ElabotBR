@@ -63,9 +63,9 @@ export default function Modules({ admin }) {
           open ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <ClassLinks admin={admin}/>
-        <ClassLinks admin={admin}/>
-        <ClassLinks admin={admin}/>
+        <ClassLinks admin={admin} />
+        <ClassLinks admin={admin} />
+        <ClassLinks admin={admin} />
       </ul>
     </li>
   );
