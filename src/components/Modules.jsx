@@ -9,7 +9,7 @@ import ClassLinks from "./ClassLinks";
 
 import { useState } from "react";
 
-export default function Modules({ admin }) {
+export default function Modules({ admin, module, active }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,10 +36,10 @@ export default function Modules({ admin }) {
                   <IoMdArrowDropdown />
                 </button>
               </span>
-              <h2 className="text-lg font-semibold">Nome Módulo</h2>
+              <h2 className="text-lg font-semibold">{module}</h2>
             </div>
             <span className="flex items-center gap-5 text-lg">
-              <p className="font-semibold">Ativo</p>
+              <p className="font-semibold">{active ? "Ativo" : "Inativo"}</p>
               <button>
                 <FaPlus />
               </button>

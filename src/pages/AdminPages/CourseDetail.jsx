@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 
 import Modules from "../../components/Modules";
 import EditCourseModal from "../../components/EditCourseModal";
+import CreateModuleModal from "../../components/CreateModuleModal";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -13,32 +14,10 @@ import { db } from "../../services/firebase";
 
 export default function CourseDetailPage() {
   const [course, setCourse] = useState([]);
+  const [modules, setModules] = useState([]);
   const [openModalCourse, setOpenModalCourse] = useState(false);
+  const [openModalCreateModule, setOpenModalCreateModule] = useState(false);
   const { companyId, courseId } = useParams();
-
-  // useEffect(() => {
-  //   const fetchCompany = async () => {
-  //     const docRef = doc(db, "companies", companyId);
-  //     const docSnap = await getDoc(docRef);
-
-  //     if (docSnap.exists()) {
-  //       const companyData = docSnap.data();
-  //       setCompany({ ...companyData, id: docSnap.id });
-
-  //       const coursesData = [];
-  //       for (const courseId of companyData.coursesId || []) {
-  //         const courseRef = doc(db, "courses", courseId);
-  //         const courseSnap = await getDoc(courseRef);
-
-  //         if (courseSnap.exists()) {
-  //           coursesData.push({ id: courseSnap.id, ...courseSnap.data() });
-  //         }
-  //       }
-  //       setCourses(coursesData);
-  //     }
-  //   };
-  //   fetchCompany();
-  // }, [companyId, openModal, openModalCompany]);
 
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -48,10 +27,21 @@ export default function CourseDetailPage() {
       if (docSnap.exists()) {
         const courseData = docSnap.data();
         setCourse({ ...courseData, id: docSnap.id });
+
+        const modulesData = [];
+        for (const moduleId of courseData.modulesId || []) {
+          const moduleRef = doc(db, "modules", moduleId);
+          const moduleSnap = await getDoc(moduleRef);
+
+          if (moduleSnap.exists()) {
+            modulesData.push({ id: moduleSnap.id, ...moduleSnap.data() });
+          }
+        }
+        setModules(modulesData);
       }
     };
     fetchCourseData();
-  }, [courseId, openModalCourse]);
+  }, [courseId, openModalCourse, openModalCreateModule]);
 
   return (
     <div className="w-full">
@@ -90,15 +80,32 @@ export default function CourseDetailPage() {
         </div>
         <div className="flex flex-col gap-3 items-center justify-between lg md:flex-row">
           <h1 className="w-full text-2xl font-bold">Módulos</h1>
-          <button className="btn-green">Adicionar Módulo</button>
+          <button
+            className="btn-green"
+            onClick={() => setOpenModalCreateModule(true)}
+          >
+            Adicionar Módulo
+          </button>
         </div>
         <ul className="flex flex-col gap-5">
-          <Modules admin={true} />
+          {modules.map((module) => (
+            <Modules
+              key={module.id}
+              admin={true}
+              module={module.name}
+              active={module.active}
+            />
+          ))}
         </ul>
       </div>
       <EditCourseModal
         openModal={openModalCourse}
         closeModal={() => setOpenModalCourse(false)}
+        courseId={courseId}
+      />
+      <CreateModuleModal
+        openModal={openModalCreateModule}
+        closeModal={() => setOpenModalCreateModule(false)}
         courseId={courseId}
       />
     </div>
