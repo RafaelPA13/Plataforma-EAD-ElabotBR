@@ -5,11 +5,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import Modules from "../../components/Modules";
 import EditCourseModal from "../../components/EditCourseModal";
 import CreateModuleModal from "../../components/CreateModuleModal";
+import ToastNotifications from "../../components/ToastNotifications";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 export default function CourseDetailPage() {
@@ -17,6 +18,8 @@ export default function CourseDetailPage() {
   const [modules, setModules] = useState([]);
   const [openModalCourse, setOpenModalCourse] = useState(false);
   const [openModalCreateModule, setOpenModalCreateModule] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
   const { companyId, courseId } = useParams();
 
   useEffect(() => {
@@ -37,11 +40,85 @@ export default function CourseDetailPage() {
             modulesData.push({ id: moduleSnap.id, ...moduleSnap.data() });
           }
         }
+        modulesData.sort((a, b) => a.index - b.index);
         setModules(modulesData);
       }
     };
     fetchCourseData();
   }, [courseId, openModalCourse, openModalCreateModule]);
+
+  const moveModuleUp = async (moduleId) => {
+    const currentModuleIndex = modules.find(
+      (module) => module.id === moduleId
+    ).index;
+
+    if (currentModuleIndex === 1) {
+      setToastMessage("Você não pode mais subir este módulo");
+      setToastType("warning");
+      return;
+    }
+
+    const moduleAbove = modules.find(
+      (module) => module.index === currentModuleIndex - 1
+    );
+
+    if (moduleAbove) {
+      await updateDoc(doc(db, "modules", moduleId), {
+        index: currentModuleIndex - 1,
+      });
+      await updateDoc(doc(db, "modules", moduleAbove.id), {
+        index: currentModuleIndex,
+      });
+      setModules((prevModules) =>
+        prevModules
+          .map((module) =>
+            module.id === moduleId
+              ? { ...module, index: currentModuleIndex - 1 }
+              : module.id === moduleAbove.id
+              ? { ...module, index: currentModuleIndex }
+              : module
+          )
+          .sort((a, b) => a.index - b.index)
+      );
+    }
+  };
+
+  const moveModuleDown = async (moduleId) => {
+    const currentModuleIndex = modules.find(
+      (module) => module.id === moduleId
+    ).index;
+
+    if (currentModuleIndex === modules.length) {
+      setToastMessage("Você não pode mais descer este módulo");
+      setToastType("warning");
+      return;
+    }
+
+    const moduleBelow = modules.find(
+      (module) => module.index === currentModuleIndex + 1
+    );
+
+    if (moduleBelow) {
+      await updateDoc(doc(db, "modules", moduleId), {
+        index: currentModuleIndex + 1,
+      });
+      await updateDoc(doc(db, "modules", moduleBelow.id), {
+        index: currentModuleIndex,
+      });
+
+      setModules((prevModules) =>
+        prevModules
+          .map((module) =>
+            module.id === moduleId
+              ? { ...module, index: currentModuleIndex + 1 }
+              : module.id === moduleBelow.id
+              ? { ...module, index: currentModuleIndex }
+              : module
+          )
+          .sort((a, b) => a.index - b.index)
+      );
+    }
+  };
 
   return (
     <div className="w-full">
@@ -94,6 +171,9 @@ export default function CourseDetailPage() {
               admin={true}
               module={module.name}
               active={module.active}
+              index={module.index}
+              moveModuleUp={() => moveModuleUp(module.id)}
+              moveModuleDown={() => moveModuleDown(module.id)}
             />
           ))}
         </ul>
@@ -108,6 +188,14 @@ export default function CourseDetailPage() {
         closeModal={() => setOpenModalCreateModule(false)}
         courseId={courseId}
       />
+      {toastMessage && (
+        <ToastNotifications
+          message={toastMessage}
+          success={toastType === "success"}
+          warning={toastType === "warning"}
+          danger={toastType === "danger"}
+        />
+      )}
     </div>
   );
 }

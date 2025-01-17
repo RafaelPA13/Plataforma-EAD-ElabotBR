@@ -9,6 +9,7 @@ import {
   updateDoc,
   doc,
   arrayUnion,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../services/firebase";
 
@@ -31,13 +32,36 @@ export default function CreateModuleModal({ openModal, closeModal, courseId }) {
       setToastType("warning");
     } else {
       try {
+        const courseRef = doc(db, "courses", courseId);
+        const courseSnap = await getDoc(courseRef);
+
+        let nextIndex = 1;
+        if (courseSnap.exists()) {
+          const courseData = courseSnap.data();
+          const modulesId = courseData.modulesId || [];
+
+          if (modulesId.length > 0) {
+            const modulesData = [];
+            for (const moduleId of modulesId) {
+              const moduleSnap = await getDoc(doc(db, "modules", moduleId));
+
+              if (moduleSnap.exists()) {
+                modulesData.push(moduleSnap.data());
+              }
+            }
+            modulesData.sort((a, b) => a.index - b.index);
+            nextIndex = parseInt(modulesData[modulesData.length - 1].index) + 1;
+          }
+        }
+
         const moduleRef = await addDoc(collection(db, "modules"), {
           name: name,
           active: true,
           classesId: [],
+          index: nextIndex,
         });
 
-        await updateDoc(doc(db, "courses", courseId), {
+        await updateDoc(courseRef, {
           modulesId: arrayUnion(moduleRef.id),
         });
 

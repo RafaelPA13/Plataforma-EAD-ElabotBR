@@ -9,7 +9,14 @@ import ClassLinks from "./ClassLinks";
 
 import { useState } from "react";
 
-export default function Modules({ admin, module, active }) {
+export default function Modules({
+  admin,
+  module,
+  active,
+  index,
+  moveModuleUp,
+  moveModuleDown,
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,17 +35,29 @@ export default function Modules({ admin, module, active }) {
           <>
             <div className="flex gap-5 items-center">
               <span className="flex flex-col items-center">
-                <button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    moveModuleUp();
+                  }}
+                  className="p-1 rounded hover:bg-green-800"
+                >
                   <IoMdArrowDropup />
                 </button>
-                <p>1</p>
-                <button>
+                <p>{index}</p>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    moveModuleDown();
+                  }}
+                  className="p-1 rounded hover:bg-green-800"
+                >
                   <IoMdArrowDropdown />
                 </button>
               </span>
               <h2 className="text-lg font-semibold">{module}</h2>
             </div>
-            <span className="flex items-center gap-5 text-lg">
+            <span className="flex flex-wrap justify-end items-center gap-5 text-lg">
               <p className="font-semibold">{active ? "Ativo" : "Inativo"}</p>
               <button>
                 <FaPlus />
