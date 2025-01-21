@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 
 import Modules from "../../components/Modules";
 import EditCourseModal from "../../components/EditCourseModal";
+import EditModuleModal from "../../components/EditModuleModal";
 import CreateModuleModal from "../../components/CreateModuleModal";
 import ToastNotifications from "../../components/ToastNotifications";
 
@@ -18,6 +19,8 @@ export default function CourseDetailPage() {
   const [modules, setModules] = useState([]);
   const [openModalCourse, setOpenModalCourse] = useState(false);
   const [openModalCreateModule, setOpenModalCreateModule] = useState(false);
+  const [openModalEditModule, setOpenModalEditModule] = useState(false);
+  const [selectedModuleId, setSelectedModuleId] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const { companyId, courseId } = useParams();
@@ -45,7 +48,7 @@ export default function CourseDetailPage() {
       }
     };
     fetchCourseData();
-  }, [courseId, openModalCourse, openModalCreateModule]);
+  }, [courseId, openModalCourse, openModalCreateModule, openModalEditModule]);
 
   const moveModuleUp = async (moduleId) => {
     const currentModuleIndex = modules.find(
@@ -174,6 +177,11 @@ export default function CourseDetailPage() {
               index={module.index}
               moveModuleUp={() => moveModuleUp(module.id)}
               moveModuleDown={() => moveModuleDown(module.id)}
+              openModal={() => {
+                setSelectedModuleId(module.id);
+                setOpenModalEditModule(true);
+              }}
+              closeModal={() => setOpenModalEditModule(false)}
             />
           ))}
         </ul>
@@ -196,6 +204,11 @@ export default function CourseDetailPage() {
           danger={toastType === "danger"}
         />
       )}
+      <EditModuleModal
+        openModal={openModalEditModule}
+        closeModal={() => setOpenModalEditModule(false)}
+        moduleId={selectedModuleId}
+      />
     </div>
   );
 }

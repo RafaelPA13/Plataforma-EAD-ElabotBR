@@ -16,6 +16,7 @@ export default function Modules({
   index,
   moveModuleUp,
   moveModuleDown,
+  openModal
 }) {
   const [open, setOpen] = useState(false);
 
@@ -62,7 +63,12 @@ export default function Modules({
               <button>
                 <FaPlus />
               </button>
-              <button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal();
+                }}
+              >
                 <MdEdit />
               </button>
               <button>
