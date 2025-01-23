@@ -7,11 +7,18 @@ import EditCourseModal from "../../components/EditCourseModal";
 import EditModuleModal from "../../components/EditModuleModal";
 import CreateModuleModal from "../../components/CreateModuleModal";
 import ToastNotifications from "../../components/ToastNotifications";
+import ConfirmModal from "../../components/ConfirmModal";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 export default function CourseDetailPage() {
@@ -20,7 +27,8 @@ export default function CourseDetailPage() {
   const [openModalCourse, setOpenModalCourse] = useState(false);
   const [openModalCreateModule, setOpenModalCreateModule] = useState(false);
   const [openModalEditModule, setOpenModalEditModule] = useState(false);
-  const [selectedModuleId, setSelectedModuleId] = useState(null);
+  const [selectedModuleId, setSelectedModuleId] = useState("");
+  const [openModalDeleteModule, setOpenModalDeleteModule] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const { companyId, courseId } = useParams();
@@ -48,7 +56,13 @@ export default function CourseDetailPage() {
       }
     };
     fetchCourseData();
-  }, [courseId, openModalCourse, openModalCreateModule, openModalEditModule]);
+  }, [
+    courseId,
+    openModalCourse,
+    openModalCreateModule,
+    openModalEditModule,
+    openModalDeleteModule,
+  ]);
 
   const moveModuleUp = async (moduleId) => {
     const currentModuleIndex = modules.find(
@@ -123,6 +137,39 @@ export default function CourseDetailPage() {
     }
   };
 
+  const deleteModule = async () => {
+    try {
+      await deleteDoc(doc(db, "modules", selectedModuleId));
+
+      await updateDoc(doc(db, "courses", courseId), {
+        modulesId: arrayRemove(selectedModuleId),
+      });
+
+      const updatedModules = modules
+        .filter((module) => module.id !== selectedModuleId)
+        .map((module, index) => ({ ...module, index: index + 1 }));
+
+      for (const module of updatedModules) {
+        await updateDoc(doc(db, "modules", module.id), { index: module.index });
+      }
+
+      setModules(updatedModules);
+      setToastMessage("Módulo deletado com sucesso");
+      setToastType("warning");
+      setSelectedModuleId("");
+      setOpenModalDeleteModule(false);
+
+      setTimeout(() => {
+        setToastMessage("");
+        setToastType("");
+      }, 5000);
+    } catch (error) {
+      console.error;
+      setToastMessage(error.message);
+      setToastType("danger");
+    }
+  };
+
   return (
     <div className="w-full">
       <div className="page">
@@ -181,7 +228,10 @@ export default function CourseDetailPage() {
                 setSelectedModuleId(module.id);
                 setOpenModalEditModule(true);
               }}
-              closeModal={() => setOpenModalEditModule(false)}
+              deleteModal={() => {
+                setSelectedModuleId(module.id);
+                setOpenModalDeleteModule(true);
+              }}
             />
           ))}
         </ul>
@@ -208,6 +258,12 @@ export default function CourseDetailPage() {
         openModal={openModalEditModule}
         closeModal={() => setOpenModalEditModule(false)}
         moduleId={selectedModuleId}
+      />
+      <ConfirmModal
+        message={"Você realmente deseja deletar este módulo"}
+        openModal={openModalDeleteModule}
+        closeModal={() => setOpenModalDeleteModule(false)}
+        deleteFunc={deleteModule}
       />
     </div>
   );

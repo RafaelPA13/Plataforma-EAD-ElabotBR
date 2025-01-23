@@ -16,7 +16,8 @@ export default function Modules({
   index,
   moveModuleUp,
   moveModuleDown,
-  openModal
+  openModal,
+  deleteModal,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -71,7 +72,12 @@ export default function Modules({
               >
                 <MdEdit />
               </button>
-              <button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteModal();
+                }}
+              >
                 <MdDelete />
               </button>
             </span>
