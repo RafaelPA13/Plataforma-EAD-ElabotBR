@@ -8,6 +8,7 @@ import EditModuleModal from "../../components/EditModuleModal";
 import CreateModuleModal from "../../components/CreateModuleModal";
 import ToastNotifications from "../../components/ToastNotifications";
 import ConfirmModal from "../../components/ConfirmModal";
+import CreateClassModal from "../../components/CreateClassModal";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -29,6 +30,7 @@ export default function CourseDetailPage() {
   const [openModalEditModule, setOpenModalEditModule] = useState(false);
   const [selectedModuleId, setSelectedModuleId] = useState("");
   const [openModalDeleteModule, setOpenModalDeleteModule] = useState(false);
+  const [openModalCreateClass, setOpenModalCreateClass] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const { companyId, courseId } = useParams();
@@ -62,6 +64,7 @@ export default function CourseDetailPage() {
     openModalCreateModule,
     openModalEditModule,
     openModalDeleteModule,
+    openModalCreateClass,
   ]);
 
   const moveModuleUp = async (moduleId) => {
@@ -218,6 +221,7 @@ export default function CourseDetailPage() {
           {modules.map((module) => (
             <Modules
               key={module.id}
+              moduleId={module.id}
               admin={true}
               module={module.name}
               active={module.active}
@@ -231,6 +235,10 @@ export default function CourseDetailPage() {
               deleteModal={() => {
                 setSelectedModuleId(module.id);
                 setOpenModalDeleteModule(true);
+              }}
+              createClassModal={()=>{
+                setSelectedModuleId(module.id)
+                setOpenModalCreateClass(true)
               }}
             />
           ))}
@@ -264,6 +272,11 @@ export default function CourseDetailPage() {
         openModal={openModalDeleteModule}
         closeModal={() => setOpenModalDeleteModule(false)}
         deleteFunc={deleteModule}
+      />
+      <CreateClassModal
+        openModal={openModalCreateClass}
+        closeModal={() => setOpenModalCreateClass(false)}
+        moduleId={selectedModuleId}
       />
     </div>
   );
