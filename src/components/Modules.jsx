@@ -7,6 +7,8 @@ import { IoMenu } from "react-icons/io5";
 
 import ClassLinks from "./ClassLinks";
 import ToastNotifications from "./ToastNotifications";
+import EditClassModal from "./EditClassModal";
+import AddMaterialsModal from "./AddMaterialsModal";
 
 import { useEffect, useState } from "react";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
@@ -26,6 +28,9 @@ export default function Modules({
 }) {
   const [open, setOpen] = useState(false);
   const [classes, setClasses] = useState([]);
+  const [selectedClassId, setSelectedClassId] = useState("");
+  const [openEditClassModal, setOpenEditClassModal] = useState(false);
+  const [openMaterialsModal, setOpenMaterialsModal] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
 
@@ -49,7 +54,7 @@ export default function Modules({
       }
     };
     fetchClassesData();
-  }, [open]);
+  }, [open, openEditClassModal, openMaterialsModal]);
 
   const moveClassUp = async (classId) => {
     const currentClassIndex = classes.find((item) => item.id === classId).index;
@@ -202,13 +207,21 @@ export default function Modules({
           {classes.map((training) => (
             <ClassLinks
               key={training.id}
-              classId={training.id}
+              // classId={training.id}
               admin={admin}
               index={training.index}
               name={training.name}
               active={training.active}
               moveClassUp={() => moveClassUp(training.id)}
               moveClassDown={() => moveClassDown(training.id)}
+              editClass={() => {
+                setSelectedClassId(training.id);
+                setOpenEditClassModal(true);
+              }}
+              addMaterials={() => {
+                setSelectedClassId(training.id);
+                setOpenMaterialsModal(true);
+              }}
             />
           ))}
         </ul>
@@ -221,6 +234,17 @@ export default function Modules({
           danger={toastType === "danger"}
         />
       )}
+      <EditClassModal
+        openModal={openEditClassModal}
+        closeModal={() => setOpenEditClassModal(false)}
+        classId={selectedClassId}
+      />
+
+      <AddMaterialsModal
+        openModal={openMaterialsModal}
+        closeModal={() => setOpenMaterialsModal(false)}
+        classId={selectedClassId}
+      />
     </div>
   );
 }

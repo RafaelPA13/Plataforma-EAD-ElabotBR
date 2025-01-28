@@ -1,32 +1,41 @@
-import { IoMdClose } from "react-icons/io";
 import ToastNotifications from "./ToastNotifications";
+import { IoMdClose } from "react-icons/io";
 
-import { useState, useEffect } from "react";
-import {
-  addDoc,
-  updateDoc,
-  collection,
-  doc,
-  getDoc,
-  arrayUnion,
-} from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 
-export default function CreateClassModal({ openModal, closeModal, moduleId }) {
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("");
+export default function EditClassModal({ openModal, closeModal, classId }) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+  const [active, setActive] = useState(true);
   const [description, setDescription] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
+
+  const fetchClassesData = async () => {
+    if (classId) {
+      const docSnap = await getDoc(doc(db, "classes", classId));
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setName(data.name || "");
+        setLink(data.link || "");
+        setActive(data.active !== undefined ? data.active : true);
+        setDescription(data.description || "");
+      }
+    }
+  };
 
   useEffect(() => {
     if (openModal) {
       setToastMessage("");
       setToastType("");
+      fetchClassesData();
     }
-  }, [openModal]);
+  }, [openModal, classId]);
 
-  const createClass = async (e) => {
+  const updataClass = async (e) => {
     e.preventDefault();
     if (name === "" || link === "") {
       setToastMessage("Preencha todos os campos do formulário");
@@ -36,42 +45,14 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
       setToastType("warning");
     } else {
       try {
-        const moduleRef = doc(db, "modules", moduleId);
-        const moduleSnap = await getDoc(moduleRef);
-
-        let nextIndex = 1;
-        if (moduleSnap.exists()) {
-          const moduleData = moduleSnap.data();
-          const classesId = moduleData.classesId || [];
-
-          if (classesId.length > 0) {
-            const classesData = [];
-            for (const classId of classesId) {
-              const classSnap = await getDoc(doc(db, "classes", classId));
-
-              if (classSnap.exists()) {
-                classesData.push(classSnap.data());
-              }
-            }
-            classesData.sort((a, b) => a.index - b.index);
-            nextIndex = parseInt(classesData[classesData.length - 1].index) + 1;
-          }
-        }
-
-        const classRef = await addDoc(collection(db, "classes"), {
+        await updateDoc(doc(db, "classes", classId), {
           name: name,
           link: link,
+          active: active,
           description: description,
-          index: nextIndex,
-          active: true,
-          materials: [],
         });
 
-        await updateDoc(moduleRef, {
-          classesId: arrayUnion(classRef.id),
-        });
-
-        setToastMessage("Aula adicionado com sucesso!");
+        setToastMessage("Aula editada com sucesso");
         setToastType("success");
 
         setName("");
@@ -102,11 +83,11 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
             danger={toastType === "danger"}
           />
         )}
-        <form className="modal-form" onSubmit={createClass}>
+        <form className="modal-form" onSubmit={updataClass}>
           <button className="modal-btn" onClick={closeModal}>
             <IoMdClose />
           </button>
-          <h1 className="mt-10 text-xl font-bold">Adicione uma Aula</h1>
+          <h1 className="mt-10 text-xl font-bold">Editar Aula</h1>
           <label className="modal-label">Nome:</label>
           <input
             type="text"
@@ -121,13 +102,24 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
             value={link}
             onChange={(e) => setLink(e.target.value)}
           />
+          <span className="w-full flex items-center gap-3">
+            <label className="modal-label">Ativo:</label>
+            <input
+              type="checkbox"
+              className="modal-checkbox"
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
+            />
+          </span>
           <label className="modal-label">Descrição:</label>
           <textarea
             className="textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
-          <button className="btn-green">Salvar</button>
+          <button className="btn-green">
+            Salvar
+          </button>
         </form>
       </div>
     </div>

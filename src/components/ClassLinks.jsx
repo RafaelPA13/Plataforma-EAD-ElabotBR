@@ -10,13 +10,15 @@ import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 export default function ClassLinks({
-  classId,
+  // classId,
   admin,
   index,
   name,
   active,
   moveClassUp,
   moveClassDown,
+  editClass,
+  addMaterials
 }) {
   return (
     <li className="bg-light py-3 px-5">
@@ -48,13 +50,21 @@ export default function ClassLinks({
           </div>
           <span className="flex items-center gap-5 text-lg text-secondary">
             <p className="font-semibold">{active ? "Ativo" : "Inativo"}</p>
-            <button>
+            <button onClick={(e)=>{
+              e.stopPropagation()
+              editClass()
+            }}>
               <MdEdit />
             </button>
-            <button>
+            <button onClick={(e)=>{
+              e.stopPropagation()
+              addMaterials()
+            }}>
               <FaBook />
             </button>
-            <button>
+            <button onClick={(e)=>{
+              e.stopPropagation()
+            }}>
               <MdDelete />
             </button>
           </span>
