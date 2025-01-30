@@ -18,6 +18,7 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
+  const [time, setTime] = useState("");
 
   useEffect(() => {
     if (openModal) {
@@ -65,6 +66,7 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
           index: nextIndex,
           active: true,
           materials: [],
+          time: time,
         });
 
         await updateDoc(moduleRef, {
@@ -77,6 +79,7 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
         setName("");
         setLink("");
         setDescription("");
+        setTime("")
 
         setTimeout(() => {
           setToastMessage("");
@@ -120,6 +123,14 @@ export default function CreateClassModal({ openModal, closeModal, moduleId }) {
             className="input"
             value={link}
             onChange={(e) => setLink(e.target.value)}
+          />
+          <label className="modal-label">Duração:</label>
+          <input
+            type="time"
+            className="input"
+            step={2}
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
           />
           <label className="modal-label">Descrição:</label>
           <textarea

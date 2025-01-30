@@ -1,27 +1,77 @@
 import ToastNotifications from "./ToastNotifications";
 import MaterialLinks from "./MaterialLinks";
+import ConfirmModal from "./ConfirmModal";
 import { IoMdClose } from "react-icons/io";
 
-import { useState } from "react";
-import { getDoc, doc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import {
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+  arrayUnion,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../services/firebase";
 
 export default function AddMaterialsModal({ openModal, closeModal, classId }) {
   const [nameLink, setNameLink] = useState("");
   const [urlLink, setUrlLink] = useState("");
+  const [materialLinks, setMaterialLinks] = useState([]);
+
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
+
+  useEffect(() => {
+    const fetchMaterialsData = async () => {
+      const docSnap = await getDoc(doc(db, "classes", classId));
+
+      if (docSnap.exists()) {
+        const classData = docSnap.data();
+
+        const materialData = [];
+        for (const materalId of classData.materials) {
+          const materialSnap = await getDoc(doc(db, "materials", materalId));
+
+          if (materialSnap.exists()) {
+            materialData.push({ id: materialSnap.id, ...materialSnap.data() });
+          }
+        }
+        setMaterialLinks(materialData);
+      }
+    };
+    fetchMaterialsData();
+  }, [openModal]);
 
   const createMaterial = async (e) => {
     e.preventDefault();
     if (nameLink === "" || urlLink === "") {
       setToastMessage("Preencha todos os campos do formulário");
       setToastType("warning");
-    } else if (!link.includes("https://")) {
+    } else if (!urlLink.includes("https://")) {
       setToastMessage("Insira um link válido");
       setToastType("warning");
     } else {
       try {
+        const materialRef = await addDoc(collection(db, "materials"), {
+          name: nameLink,
+          url: urlLink,
+        });
+
+        await updateDoc(doc(db, "classes", classId), {
+          materials: arrayUnion(materialRef.id),
+        });
+
+        setToastMessage("Material adicionado com sucesso!");
+        setToastType("success");
+
+        setNameLink("");
+        setUrlLink("");
+
+        setTimeout(() => {
+          setToastMessage("");
+          setToastType("");
+        }, 5000);
       } catch (error) {
         console.error(error);
         setToastMessage(error.message);
@@ -42,7 +92,7 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
             danger={toastType === "danger"}
           />
         )}
-        <form className="modal-form">
+        <form className="modal-form" onSubmit={createMaterial}>
           <button className="modal-btn" onClick={closeModal}>
             <IoMdClose />
           </button>
@@ -64,10 +114,15 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
           <button className="btn-green">Salvar</button>
           <h2 className="w-full text-lg font-semibold">Lista de Materiais</h2>
           <ul className="w-full max-h-[160px] flex flex-col gap-2 overflow-y-auto">
-            <MaterialLinks
-              name={"Teste"}
-              url={"https://github.com/RafaelPA13"}
-            />
+            {materialLinks.map((material) => (
+              <MaterialLinks
+                key={material.id}
+                name={material.name}
+                url={material.url}
+                admin={true}
+                deleteFunc={""}
+              />
+            ))}
           </ul>
         </form>
       </div>

@@ -55,7 +55,7 @@
   }
 
   .modal-form {
-    @apply w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-4 relative md:w-[75%] lg:w-[25%] shadow-lg;
+    @apply w-[95%] bg-light rounded-2xl p-10 flex flex-col items-center gap-3 relative md:w-[75%] lg:w-[25%] shadow-lg;
   }
 
   .modal-bg {
