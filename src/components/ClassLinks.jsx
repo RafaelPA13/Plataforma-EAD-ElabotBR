@@ -18,7 +18,8 @@ export default function ClassLinks({
   moveClassUp,
   moveClassDown,
   editClass,
-  addMaterials
+  addMaterials,
+  deleteClass,
 }) {
   return (
     <li className="bg-light py-3 px-5">
@@ -50,21 +51,31 @@ export default function ClassLinks({
           </div>
           <span className="flex items-center gap-5 text-lg text-secondary">
             <p className="font-semibold">{active ? "Ativo" : "Inativo"}</p>
-            <button onClick={(e)=>{
-              e.stopPropagation()
-              editClass()
-            }}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                editClass();
+              }}
+              className="p-1 rounded hover:bg-slate-200"
+            >
               <MdEdit />
             </button>
-            <button onClick={(e)=>{
-              e.stopPropagation()
-              addMaterials()
-            }}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                addMaterials();
+              }}
+              className="p-1 rounded hover:bg-slate-200"
+            >
               <FaBook />
             </button>
-            <button onClick={(e)=>{
-              e.stopPropagation()
-            }}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteClass();
+              }}
+              className="p-1 rounded hover:bg-slate-200"
+            >
               <MdDelete />
             </button>
           </span>

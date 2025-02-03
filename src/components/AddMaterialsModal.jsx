@@ -1,6 +1,5 @@
 import ToastNotifications from "./ToastNotifications";
 import MaterialLinks from "./MaterialLinks";
-import ConfirmModal from "./ConfirmModal";
 import { IoMdClose } from "react-icons/io";
 
 import { useEffect, useState } from "react";
@@ -11,6 +10,8 @@ import {
   updateDoc,
   arrayUnion,
   getDoc,
+  deleteDoc,
+  arrayRemove,
 } from "firebase/firestore";
 import { db } from "../services/firebase";
 
@@ -18,7 +19,7 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
   const [nameLink, setNameLink] = useState("");
   const [urlLink, setUrlLink] = useState("");
   const [materialLinks, setMaterialLinks] = useState([]);
-
+  const [selectedMaterialId, setSelectedMaterialId] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
 
@@ -41,7 +42,7 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
       }
     };
     fetchMaterialsData();
-  }, [openModal]);
+  }, [openModal, materialLinks]);
 
   const createMaterial = async (e) => {
     e.preventDefault();
@@ -77,6 +78,30 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
         setToastMessage(error.message);
         setToastType("warning");
       }
+    }
+  };
+
+  const deleteMaterial = async () => {
+    try {
+      await deleteDoc(doc(db, "materials", selectedMaterialId));
+
+      await updateDoc(doc(db, "classes", classId), {
+        materials: arrayRemove(selectedMaterialId),
+      });
+
+      setToastMessage("Material deletado com sucesso");
+      setToastType("success");
+
+      selectedMaterialId("")
+
+      setTimeout(() => {
+        setToastMessage("");
+        setToastType("");
+      }, 5000);
+    } catch (error) {
+      console.error(error);
+      setToastMessage(error.message);
+      setToastType("danger");
     }
   };
 
@@ -120,7 +145,10 @@ export default function AddMaterialsModal({ openModal, closeModal, classId }) {
                 name={material.name}
                 url={material.url}
                 admin={true}
-                deleteFunc={""}
+                deleteFunc={()=>{
+                  setSelectedMaterialId(material.id)
+                  deleteMaterial()
+                }}
               />
             ))}
           </ul>

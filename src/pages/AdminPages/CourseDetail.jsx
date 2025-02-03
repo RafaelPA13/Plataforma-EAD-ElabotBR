@@ -142,7 +142,31 @@ export default function CourseDetailPage() {
 
   const deleteModule = async () => {
     try {
-      await deleteDoc(doc(db, "modules", selectedModuleId));
+      const moduleRef = doc(db, "modules", selectedModuleId);
+      const moduleSnap = await getDoc(moduleRef);
+
+      if (moduleSnap.exists()) {
+        const moduleData = moduleSnap.data();
+        const classesId = moduleData.classesId || [];
+
+        for (const classId of classesId) {
+          const classRef = doc(db, "classes", classId);
+          const classSnap = await getDoc(classRef);
+
+          if (classSnap.exists()) {
+            const classData = classSnap.data();
+            const materials = classData.materials || [];
+
+            for (const materialId of materials) {
+              await deleteDoc(doc(db, "materials", materialId));
+            }
+
+            await deleteDoc(classRef);
+          }
+        }
+      }
+
+      await deleteDoc(moduleRef);
 
       await updateDoc(doc(db, "courses", courseId), {
         modulesId: arrayRemove(selectedModuleId),
@@ -156,9 +180,8 @@ export default function CourseDetailPage() {
         await updateDoc(doc(db, "modules", module.id), { index: module.index });
       }
 
-      setModules(updatedModules);
       setToastMessage("Módulo deletado com sucesso");
-      setToastType("warning");
+      setToastType("success");
       setSelectedModuleId("");
       setOpenModalDeleteModule(false);
 
@@ -236,9 +259,9 @@ export default function CourseDetailPage() {
                 setSelectedModuleId(module.id);
                 setOpenModalDeleteModule(true);
               }}
-              createClassModal={()=>{
-                setSelectedModuleId(module.id)
-                setOpenModalCreateClass(true)
+              createClassModal={() => {
+                setSelectedModuleId(module.id);
+                setOpenModalCreateClass(true);
               }}
             />
           ))}

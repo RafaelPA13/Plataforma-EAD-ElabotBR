@@ -17,6 +17,7 @@ export default function MaterialLinks({ name, url, admin, deleteFunc }) {
       <button
         type="button"
         className={admin ? "bg-light-green p-3 rounded-lg text-primary duration-300 hover:bg-neutral-200" : "hidden"}
+        onClick={deleteFunc}
       >
         <MdDelete />
       </button>

@@ -9,9 +9,16 @@ import ClassLinks from "./ClassLinks";
 import ToastNotifications from "./ToastNotifications";
 import EditClassModal from "./EditClassModal";
 import AddMaterialsModal from "./AddMaterialsModal";
+import ConfirmModal from "./ConfirmModal";
 
 import { useEffect, useState } from "react";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  arrayRemove,
+} from "firebase/firestore";
 import { db } from "../services/firebase";
 
 export default function Modules({
@@ -31,6 +38,7 @@ export default function Modules({
   const [selectedClassId, setSelectedClassId] = useState("");
   const [openEditClassModal, setOpenEditClassModal] = useState(false);
   const [openMaterialsModal, setOpenMaterialsModal] = useState(false);
+  const [openModalDeleteClass, setOpenModalDeleteClass] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
 
@@ -54,7 +62,7 @@ export default function Modules({
       }
     };
     fetchClassesData();
-  }, [open, openEditClassModal, openMaterialsModal]);
+  }, [open, openEditClassModal, openMaterialsModal, openModalDeleteClass]);
 
   const moveClassUp = async (classId) => {
     const currentClassIndex = classes.find((item) => item.id === classId).index;
@@ -125,6 +133,49 @@ export default function Modules({
     }
   };
 
+  const deleteClass = async () => {
+    try {
+      const classRef = doc(db, "classes", selectedClassId);
+      const classSnap = await getDoc(classRef);
+
+      if (classSnap.exists()) {
+        const classData = classSnap.data();
+        const materials = classData.materials || [];
+
+        for (const materialId of materials) {
+          await deleteDoc(doc(db, "materials", materialId));
+        }
+      }
+      await deleteDoc(classRef);
+
+      await updateDoc(doc(db, "modules", moduleId), {
+        classsesId: arrayRemove(selectedClassId),
+      });
+
+      const updatedClasses = classes
+        .filter((item) => item.id !== selectedClassId)
+        .map((item, index) => ({ ...item, index: index + 1 }));
+
+      for (const item of updatedClasses) {
+        await updateDoc(doc(db, "classes", item.id), { index: item.index });
+      }
+
+      setToastMessage("Aula deletada com sucesso");
+      setToastType("success");
+      setSelectedClassId("");
+      setOpenModalDeleteClass(false);
+
+      setTimeout(() => {
+        setToastMessage("");
+        setToastType("");
+      }, 5000);
+    } catch (error) {
+      console.error(error);
+      setToastMessage(error.message);
+      setToastType("danger");
+    }
+  };
+
   return (
     <div className="w-full">
       <li
@@ -171,6 +222,7 @@ export default function Modules({
                     e.stopPropagation();
                     createClassModal();
                   }}
+                  className="p-1 rounded hover:bg-green-800"
                 >
                   <FaPlus />
                 </button>
@@ -179,6 +231,7 @@ export default function Modules({
                     e.stopPropagation();
                     openModal();
                   }}
+                  className="p-1 rounded hover:bg-green-800"
                 >
                   <MdEdit />
                 </button>
@@ -187,6 +240,7 @@ export default function Modules({
                     e.stopPropagation();
                     deleteModal();
                   }}
+                  className="p-1 rounded hover:bg-green-800"
                 >
                   <MdDelete />
                 </button>
@@ -207,7 +261,6 @@ export default function Modules({
           {classes.map((training) => (
             <ClassLinks
               key={training.id}
-              // classId={training.id}
               admin={admin}
               index={training.index}
               name={training.name}
@@ -221,6 +274,10 @@ export default function Modules({
               addMaterials={() => {
                 setSelectedClassId(training.id);
                 setOpenMaterialsModal(true);
+              }}
+              deleteClass={() => {
+                setSelectedClassId(training.id);
+                setOpenModalDeleteClass(true);
               }}
             />
           ))}
@@ -239,11 +296,16 @@ export default function Modules({
         closeModal={() => setOpenEditClassModal(false)}
         classId={selectedClassId}
       />
-
       <AddMaterialsModal
         openModal={openMaterialsModal}
         closeModal={() => setOpenMaterialsModal(false)}
         classId={selectedClassId}
+      />
+      <ConfirmModal
+        openModal={openModalDeleteClass}
+        closeModal={() => setOpenModalDeleteClass(false)}
+        message={"Você realmente deseja deletar esta aula?"}
+        deleteFunc={deleteClass}
       />
     </div>
   );
