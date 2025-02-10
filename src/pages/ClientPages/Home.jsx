@@ -1,25 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
+import StudantNavbar from "../../components/StudantNavbar";
+import CourseCard from "../../components/CourseCard";
 
 export default function ClientHomePage() {
-  const { user, logOut } = UserAuth();
-
-  const navigate = useNavigate();
-
-  const exit = async () => {
-    try {
-      await logOut();
-      navigate("/");
-      alert("Você saiu");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   return (
-    <>
-      <h1>Seja bem vindo, {user && user.displayName} você é um cliente</h1>
-      <button onClick={exit} className="btn-red">Sair</button>
-    </>
+    <div>
+      <StudantNavbar />
+      <div className="relative top-[110px] p-7 flex flex-col">
+        <ul className="flex">
+        <CourseCard
+          id={1}
+          course={"X"}
+          mentor={"Y"}
+          active={true}
+          admin={false}
+          progress={10}
+        />
+        </ul>
+      </div>
+    </div>
   );
 }

@@ -79,6 +79,7 @@ export default function CompanyDetailPage() {
               mentor={course.mentor}
               active={course.active}
               companyId={companyId}
+              admin={true}
             />
           ))}
         </ul>
