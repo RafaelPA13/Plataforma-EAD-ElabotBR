@@ -24,7 +24,7 @@ export default function StudantNavbar() {
   return (
     <>
       <header className="w-full z-30 fixed bg-light shadow-lg shadow-zinc-300 p-5 flex items-center justify-between font-poppins">
-        <Link>
+        <Link to={"/cliente"}>
           <img src="/logo-elaborBR.svg" alt="ElaborBr" className="w-32" />
         </Link>
         <div className="w-[50%] flex justify-between lg:w-[25%]">

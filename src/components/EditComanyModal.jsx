@@ -12,6 +12,7 @@ export default function EditComapnyModal({
 }) {
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [active, setActive] = useState(true);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
 
@@ -24,6 +25,7 @@ export default function EditComapnyModal({
         const data = docSnap.data();
         setName(data.company || "");
         setCode(data.code || "");
+        setActive(data.active !== undefined ? data.active : true )
       }
     }
   };
@@ -38,6 +40,7 @@ export default function EditComapnyModal({
         await updateDoc(doc(db, "companies", companyId), {
           company: name,
           code: code,
+          active: active
         });
 
         setToastMessage("Dados da empresa alterados com sucesso");
@@ -100,6 +103,15 @@ export default function EditComapnyModal({
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
+          <span className="w-full flex gap-3 items-center">
+            <label className="modal-label">Ativo:</label>
+            <input
+              type="checkbox"
+              className="modal-checkbox"
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
+            />
+          </span>
           <button className="btn-green">Salvar</button>
         </form>
       </div>

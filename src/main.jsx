@@ -11,6 +11,7 @@ import ChooseRoutePage from "./pages/AuthPages/ChooseRoutePage.jsx";
 
 // Client Pages
 import ClientHomePage from "./pages/ClientPages/Home.jsx";
+import CompanyCoursesPage from "./pages/ClientPages/CompanyCourses.jsx";
 
 //ConsultantPages
 import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx";
@@ -59,7 +60,10 @@ const router = createBrowserRouter([
         <Client />
       </ProtectedRoutes>
     ),
-    children: [{ index: true, element: <ClientHomePage /> }],
+    children: [
+      { index: true, element: <ClientHomePage /> },
+      { path: "aulas/:companyId", element: <CompanyCoursesPage /> },
+    ],
   },
   {
     path: "/consultor/",
@@ -82,7 +86,10 @@ const router = createBrowserRouter([
       { path: "empresas", element: <CompanyPage /> },
       { path: "aulas", element: <ClassPage /> },
       { path: "aulas/:companyId", element: <CompanyDetailPage /> },
-      { path: "aulas/:companyId/cursos/:courseId", element: <CourseDetailPage/> },
+      {
+        path: "aulas/:companyId/cursos/:courseId",
+        element: <CourseDetailPage />,
+      },
       { path: "usuarios", element: <UsersPage /> },
       { path: "vendas", element: <SellPage /> },
       { path: "metricas", element: <MetricPage /> },

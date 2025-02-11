@@ -23,6 +23,8 @@ export default function CompanyPage() {
           company: company,
           code: code,
           coursesId: [],
+          active: true,
+          logo: ""
         });
         setCompany("");
         setCode("");
@@ -87,7 +89,7 @@ export default function CompanyPage() {
         />
         <button className="btn-green">Cadastrar</button>
       </form>
-      <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-5">
+      <ul className="card-grid">
         {companies.map((comp) => (
           <CompanyCard
             key={comp.id}
@@ -95,6 +97,8 @@ export default function CompanyPage() {
             logo={""}
             company={comp.company}
             code={comp.code}
+            active={comp.active}
+            admin={true}
           />
         ))}
       </ul>

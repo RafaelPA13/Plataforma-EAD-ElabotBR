@@ -33,10 +33,10 @@ export default function CourseGuide({
     );
   else
     return (
-      <Link className="bg-light-green p-5 rounded-lg flex flex-col justify-center gap-3">
+      <Link className="bg-light-green p-5 rounded-lg flex flex-col justify-center gap-3 duration-300 hover:scale-95">
         <h1 className="text-xl font-bold">{course}</h1>
         <p className="text-zinc-500 text-sm font-light">Mentor: {mentor}</p>
-        <progress max={100} value={progress} className={progress > 0 ? "block" : "hidden"}></progress>
+        <progress max={100} value={progress} className={progress > 0 ? "block w-full" : "hidden"}></progress>
       </Link>
     );
 }

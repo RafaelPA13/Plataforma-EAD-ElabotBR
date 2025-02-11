@@ -23,8 +23,8 @@ export default function ClassPage() {
 
   return (
     <div className="page">
-      <h1 className="font-bold text-2xl">Treinamentos</h1>
-      <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-5">
+      <h1 className="title">Treinamentos</h1>
+      <ul className="card-grid">
         {companies.map((comp) => (
           <CompanyCard
             key={comp.id}
@@ -32,6 +32,8 @@ export default function ClassPage() {
             logo={""}
             company={comp.company}
             code={comp.code}
+            active={comp.active}
+            admin={true}
           />
         ))}
       </ul>

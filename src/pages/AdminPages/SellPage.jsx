@@ -1,7 +1,7 @@
 export default function SellPage() {
     return (
       <div className="page">
-        <h1>Sell</h1>
+        <h1 className="title">Sell</h1>
       </div>
     );
   }

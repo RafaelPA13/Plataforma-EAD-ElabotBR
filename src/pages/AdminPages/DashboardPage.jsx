@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
   return (
     <div className="page">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <h1 className="title">Dashboard</h1>
       <InfoCardContainer list={cardInfoList} />
     </div>
   );

@@ -1,22 +1,44 @@
-import StudantNavbar from "../../components/StudantNavbar";
-import CourseCard from "../../components/CourseCard";
+import CompanyCard from "../../components/CompanyCard";
+
+import { useState, useEffect } from "react";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 export default function ClientHomePage() {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "companies"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let listOfCompanies = [];
+      querySnapshot.forEach((doc) => {
+        listOfCompanies.push({ ...doc.data(), id: doc.id });
+      });
+      setCompanies(listOfCompanies);
+    });
+    return () => {
+      unsubscribe;
+    };
+  }, []);
+
   return (
-    <div>
-      <StudantNavbar />
-      <div className="relative top-[110px] p-7 flex flex-col">
-        <ul className="flex">
-        <CourseCard
-          id={1}
-          course={"X"}
-          mentor={"Y"}
-          active={true}
-          admin={false}
-          progress={10}
-        />
-        </ul>
-      </div>
+    <div className="client-page">
+      <h1 className="title">Empresas</h1>
+      <ul className="card-grid">
+        {companies
+          .filter((comp) => comp.active == true)
+          .map((comp) => (
+            <CompanyCard
+              key={comp.id}
+              id={comp.id}
+              logo={""}
+              company={comp.company}
+              code={comp.code}
+              active={comp.active}
+              admin={false}
+            />
+          ))}
+      </ul>
     </div>
   );
 }
