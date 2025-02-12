@@ -51,7 +51,7 @@
   }
 
   .page {
-    @apply w-full h-screen p-7 font-poppins flex flex-col gap-7 overflow-y-auto;
+    @apply w-full h-screen px-7 pt-10 pb-20 font-poppins flex flex-col gap-7 overflow-y-auto md:p-7;
   }
 
   .modal-form {

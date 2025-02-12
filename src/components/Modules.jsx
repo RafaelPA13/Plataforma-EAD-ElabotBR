@@ -22,6 +22,8 @@ import {
 import { db } from "../services/firebase";
 
 export default function Modules({
+  companyId,
+  courseId,
   moduleId,
   admin,
   module,
@@ -261,10 +263,14 @@ export default function Modules({
           {classes.map((training) => (
             <ClassLinks
               key={training.id}
+              id={training.id}
+              courseId={courseId}
+              companyId={companyId}
               admin={admin}
               index={training.index}
               name={training.name}
               active={training.active}
+              time={training.time}
               moveClassUp={() => moveClassUp(training.id)}
               moveClassDown={() => moveClassDown(training.id)}
               editClass={() => {

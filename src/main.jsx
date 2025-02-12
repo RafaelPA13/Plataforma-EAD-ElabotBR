@@ -12,6 +12,8 @@ import ChooseRoutePage from "./pages/AuthPages/ChooseRoutePage.jsx";
 // Client Pages
 import ClientHomePage from "./pages/ClientPages/Home.jsx";
 import CompanyCoursesPage from "./pages/ClientPages/CompanyCourses.jsx";
+import CoursesPage from "./pages/ClientPages/CoursesPage.jsx";
+import VideoPage from "./pages/ClientPages/VideoPage.jsx";
 
 //ConsultantPages
 import ConsultantHomePage from "./pages/ConsultantPages/Home.jsx";
@@ -63,6 +65,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <ClientHomePage /> },
       { path: "aulas/:companyId", element: <CompanyCoursesPage /> },
+      { path: "aulas/:companyId/curso/:courseId", element: <CoursesPage /> },
+      { path: "aulas/:companyId/curso/:courseId/video/:classId", element: <VideoPage /> },
     ],
   },
   {

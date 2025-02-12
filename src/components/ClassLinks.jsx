@@ -10,11 +10,14 @@ import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 export default function ClassLinks({
-  // classId,
+  id,
+  companyId,
+  courseId,
   admin,
   index,
   name,
   active,
+  time,
   moveClassUp,
   moveClassDown,
   editClass,
@@ -22,7 +25,7 @@ export default function ClassLinks({
   deleteClass,
 }) {
   return (
-    <li className="bg-light py-3 px-5">
+    <li className="bg-light py-3 px-5 duration-300 hover:bg-slate-200">
       {admin ? (
         <div className="flex justify-between items-center">
           <div className="flex gap-5 items-center text-primary">
@@ -49,7 +52,7 @@ export default function ClassLinks({
             </span>
             <h2 className="text-lg font-semibold">{name}</h2>
           </div>
-          <span className="flex items-center gap-5 text-lg text-secondary">
+          <span className="flex flex-wrap items-center justify-end gap-5 text-lg text-secondary">
             <p className="font-semibold">{active ? "Ativo" : "Inativo"}</p>
             <button
               onClick={(e) => {
@@ -81,7 +84,10 @@ export default function ClassLinks({
           </span>
         </div>
       ) : (
-        <Link className="flex justify-between items-center">
+        <Link
+          to={`/cliente/aulas/${companyId}/curso/${courseId}/video/${id}`}
+          className="flex justify-between items-center"
+        >
           <div className="flex gap-5 items-center text-primary">
             <IoMdPlayCircle />
             <h2 className="text-lg font-semibold">{name}</h2>
@@ -89,9 +95,9 @@ export default function ClassLinks({
           <span className="flex items-center gap-5 text-lg">
             <h2 className="flex gap-2 items-center text-primary">
               <IoTimeOutline />
-              00
+              {time}
             </h2>
-            <h2 className="flex gap-2 items-center text-secondary">
+            <h2 className="hidden md:flex gap-2 items-center text-secondary">
               <FaStar />0
             </h2>
           </span>

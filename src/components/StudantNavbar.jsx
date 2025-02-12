@@ -25,7 +25,7 @@ export default function StudantNavbar() {
     <>
       <header className="w-full z-30 fixed bg-light shadow-lg shadow-zinc-300 p-5 flex items-center justify-between font-poppins">
         <Link to={"/cliente"}>
-          <img src="/logo-elaborBR.svg" alt="ElaborBr" className="w-32" />
+          <img src="/logo-elaborBR.svg" alt="ElaborBr" className="w-24 duration-300 hover:scale-110" />
         </Link>
         <div className="w-[50%] flex justify-between lg:w-[25%]">
           <span
@@ -39,7 +39,7 @@ export default function StudantNavbar() {
                   : user.photoURL
               }
               alt="foto de perfil"
-              className="w-14"
+              className="w-12"
             />
             <div className="hidden md:block">
               <h1 className="font-semibold text-sm">{user.displayName}</h1>
