@@ -93,4 +93,8 @@
   .card-grid {
     @apply grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-5
   }
+
+  .tabs-content {
+    @apply py-5 flex flex-col gap-5
+  }
 }

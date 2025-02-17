@@ -7,7 +7,7 @@ export default function MaterialLinks({ name, url, admin, deleteFunc }) {
     <div className="flex gap-2">
       <a
         href={url}
-        className="w-full bg-light-green p-3 rounded-lg text-primary font-semibold flex items-center gap-2"
+        className="w-full bg-light-green p-3 rounded-lg text-primary font-semibold flex items-center gap-2 duration-300 hover:scale-95"
         target="_blank"
         rel="noopener noreferrer"
       >
